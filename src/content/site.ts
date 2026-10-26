@@ -1,3 +1,6 @@
+import type { ComponentProps } from "react";
+import type { Compare } from "@/components/work/compare";
+
 // Single source of truth for site copy, matching the approved canvas ("The Plot").
 // Voice rules live in PLAN.md (no em dashes). The CV is the source of truth for facts.
 
@@ -61,8 +64,8 @@ export type Recipe = {
   result: { value: string; note: string };
   footnote?: string;
   flagship?: boolean;
-  /** Flagship only: hand-written note on the sketch half of the sketch ⇄ ship wipe. */
-  sketch?: string;
+  /** Flagship only: a before/after diagram wipe (see `components/work/diagrams.tsx`). */
+  compare?: ComponentProps<typeof Compare>;
   /** Flagship only: the plotted result. `down` = lower is better. */
   chart?: { label: string; from: string; to: string; trend: "down" | "up" };
 };
@@ -75,13 +78,17 @@ export const recipes: Recipe[] = [
     eyebrow: "DEIMR · Marketplace · 2023",
     headline: "Fast is a feature.",
     serves: "~1,000 users, storefront and dashboard",
-    prep: "2023 · sole frontend developer",
+    prep: "2023 · sole storefront engineer",
     ingredients: "Next.js, React.lazy + Suspense, WebP, caching",
     result: { value: "1.5s", note: "page load, from 9 to 15s" },
     footnote:
       "Measured with Lighthouse before and after route-level code-splitting, WebP images and Next.js caching.",
     flagship: true,
-    sketch: "v0: search, 3 cards, cart",
+    compare: {
+      label: "Compare DEIMR's architecture before and after the move to Next.js",
+      before: { label: "Before · React", note: "9 to 15s", diagram: "deimr-before" },
+      after: { label: "After · Next.js", note: "~1.5s", diagram: "deimr-after" },
+    },
     chart: { label: "Load time", from: "9 to 15s", to: "~1.5s", trend: "down" },
   },
   {
