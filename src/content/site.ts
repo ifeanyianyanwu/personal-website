@@ -50,8 +50,25 @@ export const proof = [
   { value: "3+ yrs", label: "shipping TypeScript in production" },
 ] as const;
 
+export type Recipe = {
+  slug: string;
+  name: string;
+  eyebrow: string;
+  headline: string;
+  serves: string;
+  prep: string;
+  ingredients: string;
+  result: { value: string; note: string };
+  footnote?: string;
+  flagship?: boolean;
+  /** Flagship only: hand-written note on the sketch half of the sketch ⇄ ship wipe. */
+  sketch?: string;
+  /** Flagship only: the plotted result. `down` = lower is better. */
+  chart?: { label: string; from: string; to: string; trend: "down" | "up" };
+};
+
 /** Project facts in recipe-card form: Serves · Prep · Ingredients · Result. */
-export const recipes = [
+export const recipes: Recipe[] = [
   {
     slug: "deimr",
     name: "DEIMR",
@@ -64,6 +81,8 @@ export const recipes = [
     footnote:
       "Measured with Lighthouse before and after route-level code-splitting, WebP images and Next.js caching.",
     flagship: true,
+    sketch: "v0: search, 3 cards, cart",
+    chart: { label: "Load time", from: "9 to 15s", to: "~1.5s", trend: "down" },
   },
   {
     slug: "connecthub",
@@ -74,7 +93,6 @@ export const recipes = [
     prep: "Oct 2025 to Apr 2026",
     ingredients: "Next.js, Supabase, Gemini embeddings, Jaccard similarity",
     result: { value: "60/40", note: "hybrid matching" },
-    flagship: false,
   },
   {
     slug: "codesprintmt",
@@ -85,9 +103,8 @@ export const recipes = [
     prep: "One day, solo",
     ingredients: "Mastercard sandbox, OAuth 1.0a, RSA-SHA256, .p12 keystores",
     result: { value: "Top 10", note: "Open Category" },
-    flagship: false,
   },
-] as const;
+];
 
 export const chapters = [
   {
