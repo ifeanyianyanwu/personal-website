@@ -37,7 +37,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       suppressHydrationWarning
       className={`${interTight.variable} ${instrumentSerif.variable} ${caveat.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col bg-bg text-fg">
+      {/* suppressHydrationWarning: extensions like Grammarly add attributes to <body> before React loads */}
+      <body suppressHydrationWarning className="flex min-h-full flex-col bg-bg text-fg">
         <Providers>
           <Nav />
           <div className="relative flex flex-1 flex-col">
