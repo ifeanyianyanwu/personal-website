@@ -1,0 +1,65 @@
+export const meta = {
+  title: "DEIMR",
+  year: 2023,
+  summary: "Marketplace storefront and dashboard, made fast.",
+  tags: ["Next.js", "React", "Lighthouse"],
+  kinds: ["Production"],
+  status: "case-study",
+  result: "Page load from 9 to 15s down to ~1.5s",
+  when: "Feb 2023 to Jan 2024",
+  headline: { lead: "Fast is a", accent: "feature." },
+  lede: "How I made the case for moving a live marketplace from React to Next.js, then moved it myself, taking page loads from 9 to 15 seconds to about 1.5.",
+  teaser: "Moving a live marketplace to Next.js, and taking page loads from 9 to 15 seconds to about 1.5.",
+};
+
+<Recipe
+  serves="~1,000 users of a marketplace for electronics, spare parts and repairs"
+  prep="Feb 2023 to Jan 2024 · remote, Famagusta, Cyprus"
+  role="Sole engineer on the storefront, user dashboard and landing page, in a team with CRM and mobile engineers, product design, the COO and CEO"
+  ingredients="React → Next.js, React.lazy + Suspense, WebP, Next.js caching, Lighthouse"
+>
+  <PlotChart label="Page load" from="9 to 15s" to="~1.5s" trend="down" />
+</Recipe>
+
+<Chapter n="01" title="The problem.">
+
+DEIMR sells electronics, spare parts and device repairs. When I joined, pages took 9 to 15 seconds to load. On a marketplace, a slow page is a closed shop: people leave before they see a product.
+
+The hard part wasn't only the code. The shop was live, and changing frameworks under a live shop is a big thing to ask for. I had to show management that React on its own wasn't the right fit, win the go-ahead to switch, and then do the move alone while customers kept using it.
+
+</Chapter>
+
+<Chapter n="02" title="The method.">
+  <Steps>
+    <Step title="Measure">Ran Lighthouse on the slowest routes to get a baseline, so every change had a number to beat.</Step>
+    <Step title="Make the case">Showed management why React alone was holding the storefront back, and got the go-ahead to switch to Next.js.</Step>
+    <Step title="Move a live shop, alone">Migrated the storefront to Next.js as the only engineer on it, while the platform stayed open. Next.js opened up server rendering and built-in caching.</Step>
+    <Step title="Split by route">Loaded each route on demand with React.lazy and Suspense, so the first page stopped paying for every other page.</Step>
+    <Step title="Shrink the images">Converted product imagery to WebP. On a marketplace, images are most of the weight.</Step>
+    <Step title="Cache">Used Next.js caching so repeat visits and shared data stopped hitting the network every time.</Step>
+  </Steps>
+</Chapter>
+
+<Chapter n="03" title={<>Before and <em>after.</em></>} intro="Drag, or scroll, to see how a first visit changed. A diagram of the architecture drawn for this page, not a screenshot." wide>
+  <Compare
+    label="Compare DEIMR's architecture before and after the move to Next.js"
+    before={{ label: "Before · React, rendered in the browser", note: "9 to 15s", diagram: "deimr-before" }}
+    after={{ label: "After · Next.js, split and cached", note: "~1.5s", diagram: "deimr-after" }}
+  />
+</Chapter>
+
+<Chapter n="04" title="The result.">
+  <Results>
+    <Stat value="1.5s">page load, down from 9 to 15s, measured with Lighthouse</Stat>
+    <Stat value="~1,000">users on the storefront and dashboard</Stat>
+    <Stat value="2">frontend interns interviewed, onboarded and mentored</Stat>
+  </Results>
+</Chapter>
+
+<Chapter n="05" title="What I'd keep.">
+
+Measure first. Lighthouse turned "it feels slow" into numbers the team could agree on, and every change after that had to move one.
+
+The decision I'd defend: pushing for Next.js on a product that was already live. It was the harder conversation, and it's the reason the 1.5 seconds happened.
+
+</Chapter>
