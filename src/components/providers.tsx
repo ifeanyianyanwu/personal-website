@@ -7,16 +7,13 @@ import { ReactLenis } from "lenis/react";
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider attribute="data-theme" defaultTheme="light" disableTransitionOnChange>
-      <MotionConfig reducedMotion="user">
-        <SmoothScroll />
-        {children}
-      </MotionConfig>
+      <MotionConfig reducedMotion="user">{children}</MotionConfig>
     </ThemeProvider>
   );
 }
 
-// Mounted beside the page (not around it) so toggling it never remounts content.
-function SmoothScroll() {
+// Mounted beside the page (not around it) so toggling it never remounts content. Site pages only, not the Studio.
+export function SmoothScroll() {
   const reduce = useReducedMotion();
   return reduce ? null : <ReactLenis root options={{ lerp: 0.1 }} />;
 }
