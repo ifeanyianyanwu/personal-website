@@ -1,0 +1,63 @@
+export const meta = {
+  title: "CodeSprintMT",
+  year: 2026,
+  order: 3,
+  summary: "Contactless charity donations on the Mastercard sandbox, solo in one day.",
+  tags: ["Hackathon", "Mastercard API", "OAuth 1.0a"],
+  kinds: ["Hackathons"],
+  status: "case-study",
+  result: "Top 10, Open Category",
+  when: "July 2026 · one day",
+  headline: { lead: "One day. One API.", accent: "Top 10." },
+  lede: "A solo, day-long build of a contactless charity donation platform at CodeSprintMT 2026. It finished in the top 10 of the Open Category.",
+  teaser: "A solo, day-long build on the Mastercard sandbox. Top 10 in the Open Category.",
+};
+
+<Recipe
+  serves="Charity donors paying contactless, and the admins who run it"
+  prep="One day, solo · CodeSprint Malta at ICE Campus"
+  role="Everything: donor app, admin dashboard and the Mastercard integration"
+  ingredients="Mastercard sandbox, OAuth 1.0a (RSA-SHA256), .p12 keystores, role-based access, live ledger, multi-currency"
+>
+  <BigResult value="Top 10" note="Open Category, CodeSprintMT 2026" />
+</Recipe>
+
+<Chapter n="01" title="The week before.">
+
+I was a few weeks from finishing my degree. The week before, I worked back-to-back waiting shifts: on my feet, carrying plates, the whole thing. Not exactly the prep you'd plan for a solo, day-long build.
+
+I showed up anyway.
+
+</Chapter>
+
+<Chapter n="02" title="The brief.">
+
+Build a contactless charity donation platform from scratch, in one day: a donor app, an admin dashboard, role-based access, a live transaction ledger and multi-currency support.
+
+</Chapter>
+
+<Chapter n="03" title={<>Docs versus <em>sandbox.</em></>} intro="Then came the Mastercard sandbox, and the day got interesting. Drag, or scroll, to compare. A diagram drawn for this page." wide>
+  <Compare
+    label="Compare what the Mastercard documentation described with what the integration actually took"
+    before={{ label: "What the docs said", note: "One guide", diagram: "docs-said" }}
+    after={{ label: "What it actually took", note: "Many linked pages", diagram: "docs-took" }}
+  />
+</Chapter>
+
+<Chapter n="04" title="Where the day went.">
+
+OAuth 1.0a with RSA-SHA256 signatures, .p12 keystores, and documentation that confidently described behaviour the sandbox didn't have.
+
+The tap-to-pay guide was out of date. The parts of one feature were spread across pages that linked to more pages, and none of them told the whole story. I pieced them together into what I actually needed. The kind of problem that doesn't care how tired you are.
+
+It took a while, but I got it working.
+
+</Chapter>
+
+<Chapter n="05" title="Next year.">
+
+The organisers at ICE Campus ran a tight ship: a clear brief, good structure and fair judging. The kind of competition that makes you want to come back.
+
+Next year I'm coming with a full night's sleep and zero pending orders.
+
+</Chapter>

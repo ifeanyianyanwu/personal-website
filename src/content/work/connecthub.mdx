@@ -1,0 +1,54 @@
+export const meta = {
+  title: "ConnectHub",
+  year: 2025,
+  order: 3,
+  summary: "Hobby-based social network with AI matching. My final-year project.",
+  tags: ["AI", "PWA", "Supabase"],
+  kinds: ["AI & ML"],
+  status: "case-study",
+  result: "60/40 blend of Jaccard similarity and Gemini embeddings",
+  when: "Oct 2025 to Apr 2026",
+  headline: { lead: "Interests over", accent: "identity." },
+  lede: "My final-year project: a social network that matches people and communities on what they love, and asks whether that beats platforms built around who you already know.",
+  teaser: "Matching people on what they love, with a 60/40 blend of Jaccard similarity and Gemini embeddings.",
+};
+
+<Recipe
+  serves="People looking for others who share their hobbies, or the ones next door"
+  prep="Oct 2025 to Apr 2026 · final-year project"
+  ingredients="Next.js, Supabase, Gemini embeddings, Jaccard similarity, PWA"
+>
+  <Blend parts={[{ label: "Jaccard similarity", value: 60, note: "hobbies you share" }, { label: "Gemini embeddings", value: 40, note: "hobbies close in meaning" }]} />
+</Recipe>
+
+<Chapter n="01" title="The question.">
+
+Most social apps start with people you already know. ConnectHub starts with what you love: you tell it your hobbies, and it finds people and communities around them.
+
+The research question was simple to say and hard to answer: does interest-based AI matching beat people-based platforms?
+
+</Chapter>
+
+<Chapter n="02" title="The hard part.">
+
+Recommending two things at once: people, and communities. Make the matching too literal and you only meet people with your exact hobbies. Make it too loose and the matches stop making sense.
+
+I was looking for the sweet spot in between, where you find people like you, but also the hobby next to yours and the communities next to the ones you already follow.
+
+</Chapter>
+
+<Chapter n="03" title="The blend.">
+  <Steps>
+    <Step title="Jaccard similarity, 60%">Compares hobby lists directly. The more hobbies two people share, the higher the score. It keeps every match grounded in something you can see.</Step>
+    <Step title="Gemini embeddings, 40%">Compares what hobbies mean, not just their names, so hobbies that sit close together still find each other. This is where discovery comes from.</Step>
+    <Step title="Tuned for both">The same balance has to work for people and for communities, so I tuned it against both instead of one.</Step>
+  </Steps>
+</Chapter>
+
+<Chapter n="04" title="What I'd keep.">
+
+The decision I'd defend: the 60/40 blend. Shared hobbies lead, so a match always has a reason you can point to, and the embeddings widen the circle without taking it over.
+
+Documentation has to match the code. On a research project the write-up is part of the product, so every claim in it has to hold up against what the code actually does.
+
+</Chapter>
