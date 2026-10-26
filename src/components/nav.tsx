@@ -2,14 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import { nav, profile } from "@/content/site";
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -38,16 +37,10 @@ export function Nav() {
         </Link>
 
         <nav aria-label="Main" className="hidden items-center gap-8 md:flex">
-          {nav.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              aria-current={pathname.startsWith(item.href) ? "page" : undefined}
-              className="text-sm text-muted transition hover:text-fg aria-[current=page]:text-fg"
-            >
-              {item.label}
-            </Link>
-          ))}
+          {/* The current path is URL data, so it streams in; the shell shows the same links unmarked. */}
+          <Suspense fallback={<DesktopLinks pathname="" />}>
+            <CurrentDesktopLinks />
+          </Suspense>
           <ThemeToggle />
           <Link
             href="#contact"
@@ -125,4 +118,21 @@ function DiceMark() {
       ))}
     </span>
   );
+}
+
+function CurrentDesktopLinks() {
+  return <DesktopLinks pathname={usePathname()} />;
+}
+
+function DesktopLinks({ pathname }: { pathname: string }) {
+  return nav.map((item) => (
+    <Link
+      key={item.href}
+      href={item.href}
+      aria-current={pathname.startsWith(item.href) ? "page" : undefined}
+      className="text-sm text-muted transition hover:text-fg aria-[current=page]:text-fg"
+    >
+      {item.label}
+    </Link>
+  ));
 }
