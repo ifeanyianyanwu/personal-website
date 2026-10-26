@@ -2,8 +2,8 @@ import { Reveal } from "@/components/motion";
 import { PlotPoint } from "@/components/plot-point";
 import { LinkArrow } from "@/components/ui";
 import { recipes, type Recipe } from "@/content/site";
+import { Compare } from "@/components/work/compare";
 import { PlotChart } from "./plot-chart";
-import { SketchShip } from "./sketch-ship";
 
 /** Selected work as recipe cards. Plot route: down the right gutter (13, 14) on desktop; mobile stays in the left gutter. */
 export function Work() {
@@ -39,9 +39,7 @@ export function Work() {
             </div>
           </div>
           <div className="flex flex-col gap-4">
-            {flagship.sketch && (
-              <SketchShip note={flagship.sketch} label={`Compare the first sketch of ${flagship.name} with the shipped design`} />
-            )}
+            {flagship.compare && <Compare {...flagship.compare} />}
             {flagship.chart && <PlotChart {...flagship.chart} />}
           </div>
         </article>
