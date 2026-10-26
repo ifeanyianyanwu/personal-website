@@ -1,0 +1,165 @@
+@import "tailwindcss";
+@import "lenis/dist/lenis.css";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* Raw palette. Components should use the semantic tokens below instead. */
+@theme {
+  --color-sand-50: #fbf8f3;
+  --color-sand-100: #f4eee4;
+  --color-sand-200: #e9dfcf;
+  --color-sand-300: #d6c9b4;
+  --color-ink: #1d1b18;
+  --color-ink-soft: #5b554c;
+  --color-sky-100: #e6f1fa;
+  --color-sky-200: #d6e8f6;
+  --color-sky-300: #b3d4ee;
+  --color-sky-500: #7fb2dc;
+  --color-sky-700: #2f5f8a;
+  --color-sky-900: #1f3a56;
+
+  --font-sans: var(--font-inter-tight), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-instrument-serif), ui-serif, Georgia, serif;
+  --font-hand: var(--font-caveat), cursive;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/*
+ * Semantic tokens (approved canvas, "The Plot"):
+ * bg-bg, bg-surface, bg-sand, text-fg, text-muted, border-line, border-line-strong,
+ * bg-sky + text-on-sky (baby blue surfaces, same in both themes), text-accent (accent text),
+ * bg-cta + text-cta-fg (primary buttons), bg-mist + text-mist-fg (soft tiles), stroke-plot (the pen line).
+ */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-sand: var(--sand);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-sky: var(--color-sky-300);
+  --color-on-sky: var(--color-sky-900);
+  --color-accent: var(--accent);
+  --color-cta: var(--cta);
+  --color-cta-fg: var(--cta-fg);
+  --color-mist: var(--mist);
+  --color-mist-fg: var(--mist-fg);
+  --color-plot: var(--plot);
+}
+
+:root {
+  --bg: var(--color-sand-100);
+  --surface: var(--color-sand-50);
+  --sand: var(--color-sand-200);
+  --fg: var(--color-ink);
+  --muted: var(--color-ink-soft);
+  --line: #e2d7c5;
+  --line-strong: var(--color-sand-300);
+  --accent: var(--color-sky-700);
+  --cta: var(--color-sky-900);
+  --cta-fg: var(--color-sand-100);
+  --mist: var(--color-sky-200);
+  --mist-fg: var(--color-sky-900);
+  --plot: var(--color-sky-500);
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --bg: #12171d;
+  --surface: #1a2129;
+  --sand: #232b34;
+  --fg: #f1ebe1;
+  --muted: #a8a095;
+  --line: #2a323c;
+  --line-strong: #3a4450;
+  --accent: var(--color-sky-300);
+  --cta: var(--color-sky-300);
+  --cta-fg: var(--color-sky-900);
+  --mist: #26384a;
+  --mist-fg: var(--color-sky-100);
+  --plot: var(--color-sky-300);
+  color-scheme: dark;
+}
+
+@utility container-page {
+  width: 100%;
+  max-width: 80rem;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 3rem);
+}
+
+/* Type scale: serif leads display headlines, Inter Tight for UI, Caveat for notes only. */
+@utility text-display {
+  font-family: var(--font-serif);
+  font-size: clamp(4rem, 8.6vw, 8.75rem);
+  line-height: 0.86;
+  letter-spacing: -0.025em;
+  font-weight: 400;
+}
+@utility text-headline {
+  font-family: var(--font-serif);
+  font-size: clamp(3.25rem, 6vw, 6rem);
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  font-weight: 400;
+}
+@utility text-title {
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+@utility text-lede {
+  font-size: clamp(1.125rem, 1.6vw, 1.3125rem);
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+}
+@utility text-eyebrow {
+  font-size: 0.75rem;
+  line-height: 1;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+@utility text-hand {
+  font-family: var(--font-hand);
+  font-weight: 700;
+  line-height: 1.05;
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+html {
+  background: var(--bg);
+  color: var(--fg);
+}
+
+body {
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: var(--color-sky-300);
+  color: var(--color-sky-900);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
