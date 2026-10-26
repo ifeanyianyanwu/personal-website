@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import { Caveat, Inter_Tight, Instrument_Serif } from "next/font/google";
 import { Providers } from "@/components/providers";
-import { Nav } from "@/components/nav";
-import { Footer } from "@/components/footer";
-import { PlotLine } from "@/components/plot-line";
 import { profile } from "@/content/site";
 import "./globals.css";
 
@@ -39,14 +36,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       {/* suppressHydrationWarning: extensions like Grammarly add attributes to <body> before React loads */}
       <body suppressHydrationWarning className="flex min-h-full flex-col bg-bg text-fg">
-        <Providers>
-          <Nav />
-          <div className="relative flex flex-1 flex-col">
-            <main className="flex-1">{children}</main>
-            <Footer />
-            <PlotLine />
-          </div>
-        </Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
