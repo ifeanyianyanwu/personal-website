@@ -5,13 +5,13 @@ import { recipes, type Recipe } from "@/content/site";
 import { PlotChart } from "./plot-chart";
 import { SketchShip } from "./sketch-ship";
 
-/** Selected work as recipe cards. Plot route: down the right gutter (13, 14). */
+/** Selected work as recipe cards. Plot route: down the right gutter (13, 14) on desktop; mobile stays in the left gutter. */
 export function Work() {
   const [flagship, ...rest] = [...recipes].sort((a, b) => Number(!!b.flagship) - Number(!!a.flagship));
 
   return (
     <section id="work" className="container-page relative scroll-mt-24 pt-32 md:pt-40">
-      <PlotPoint n={13} className="plot-r top-0" />
+      <PlotPoint n={13} className="plot-r top-0 hidden md:block" />
 
       <div className="flex flex-wrap items-end justify-between gap-6">
         <div>
@@ -66,7 +66,7 @@ export function Work() {
           <sup>1</sup> {flagship.footnote}
         </p>
       )}
-      <PlotPoint n={14} className="plot-r bottom-0" />
+      <PlotPoint n={14} className="plot-r bottom-0 hidden md:block" />
     </section>
   );
 }
