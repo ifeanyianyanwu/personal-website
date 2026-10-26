@@ -24,7 +24,10 @@ export function Work() {
       </div>
 
       <Reveal className="mt-14">
-        <article className="grid gap-10 rounded-[2.5rem] bg-sky p-7 text-on-sky md:grid-cols-2 md:p-11">
+        <article data-plot-surface className="relative grid gap-10 rounded-[2.5rem] bg-sky p-7 text-on-sky md:grid-cols-2 md:p-11">
+          {/* Mobile: run the line inside the card's left padding so it turns navy instead of blurring into the card edge. */}
+          <PlotPoint n={13.5} className="top-10 left-3 md:hidden" />
+          <PlotPoint n={13.7} className="bottom-10 left-3 md:hidden" />
           <div className="flex flex-col gap-4">
             <p className="text-eyebrow opacity-70">{flagship.eyebrow}</p>
             <h3 className="font-serif text-[clamp(3rem,5vw,4.5rem)] leading-[0.92]">{flagship.headline}</h3>
