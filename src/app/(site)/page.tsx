@@ -1,5 +1,6 @@
 import { Hero } from "@/components/home/hero";
 import { Intro } from "@/components/home/intro";
+import { Latest } from "@/components/home/latest";
 import { Faq, Proof, Story } from "@/components/home/sections";
 import { Work } from "@/components/home/work";
 import { Marquee } from "@/components/ui";
@@ -16,6 +17,7 @@ export default function Home() {
       <Work />
       <Proof />
       <Story />
+      <Latest />
       <Faq />
     </>
   );
