@@ -1,6 +1,5 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
 import { useReducedMotion } from "motion/react";
 
@@ -39,10 +38,9 @@ export function PlotLine() {
   const tipRef = useRef<SVGCircleElement>(null);
   const [geo, setGeo] = useState<Geo | null>(null);
   const reduce = useReducedMotion();
-  const pathname = usePathname();
   const clipId = useId();
 
-  // Measure points and surfaces relative to the wrapper; re-measure on resize, font load and route change.
+  // Measure points and surfaces relative to the wrapper; re-measure on resize, font load and content change (route change).
   useEffect(() => {
     const host = svgRef.current?.parentElement;
     if (!host) return;
@@ -62,12 +60,26 @@ export function PlotLine() {
       const surfaces = [...host.querySelectorAll("[data-plot-surface]")].map(rel);
       setGeo(pts.length < 2 ? null : { pts, segs: toSegments(pts), w: box.width, h: box.height, surfaces });
     };
+    let frame = 0;
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(() => ((frame = 0), measure()));
+    };
     measure();
-    const ro = new ResizeObserver(measure);
+    const ro = new ResizeObserver(schedule);
     ro.observe(host);
+    // Reading the pathname would need Suspense here, so watch the page content instead.
+    // Ignore the line's own SVG (its probe path would otherwise re-trigger this forever).
+    const mo = new MutationObserver((records) => {
+      if (records.some((r) => !svgRef.current?.contains(r.target))) schedule();
+    });
+    mo.observe(host, { childList: true, subtree: true });
     document.fonts?.ready.then(measure);
-    return () => ro.disconnect();
-  }, [pathname]);
+    return () => {
+      cancelAnimationFrame(frame);
+      ro.disconnect();
+      mo.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     const path = pathRef.current;
