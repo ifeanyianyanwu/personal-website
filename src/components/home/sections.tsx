@@ -3,11 +3,10 @@ import { PlotPoint } from "@/components/plot-point";
 import { LinkArrow } from "@/components/ui";
 import { chapters, faq, proof } from "@/content/site";
 
-/** Proof numbers. Plot route: crosses the top gap from the right gutter to the left (15, 15.5). */
+/** Proof numbers. Plot route: crosses the top gap from the right gutter to the left (15.5). */
 export function Proof() {
   return (
     <section aria-label="Proof" className="container-page relative pt-28 md:pt-36">
-      <PlotPoint n={15} className="plot-r top-14" />
       <PlotPoint n={15.5} className="plot-l top-14" />
       <dl className="grid grid-cols-2 border-t border-line-strong md:grid-cols-4">
         {proof.map((p, i) => (

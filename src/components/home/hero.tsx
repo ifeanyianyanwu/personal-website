@@ -3,10 +3,12 @@ import { Reveal, SplitText } from "@/components/motion";
 import { PlotPoint } from "@/components/plot-point";
 import { ButtonLink } from "@/components/ui";
 import { profile, timeline } from "@/content/site";
+import { PortraitScribble } from "./portrait-scribble";
 
 /**
  * Plot route through the hero: down the left gutter (1, 2), along the timeline
- * dots (3 to 7, eased by 1.5 and 7.5), a loop around the portrait (8 to 11), out the bottom right (12).
+ * dots (3 to 7, eased by 1.5, 7.5 and 7.8), then on to the right gutter of the work section. The portrait gets
+ * its own drawn-on-load loop so the scroll line only ever travels down the page.
  * Mobile stacks text → timeline → portrait so the same order still reads top to bottom.
  */
 export function Hero() {
@@ -40,10 +42,7 @@ export function Hero() {
           {profile.note}
         </p>
         <div className="relative md:mr-10">
-          <PlotPoint n={8} className="-right-10 bottom-8" />
-          <PlotPoint n={9} className="-top-10 left-2/3" />
-          <PlotPoint n={10} className="top-1/2 -left-12" />
-          <PlotPoint n={11} className="-bottom-10 left-1/2" />
+          <PortraitScribble />
           <div className="relative h-[300px] w-[240px] overflow-hidden rounded-full bg-sand md:h-[340px] md:w-[270px]">
             <Image
               src={profile.portrait.src}
@@ -61,6 +60,7 @@ export function Hero() {
         <PlotPoint n={1.5} className="plot-in-l -top-12" />
         <PlotPoint n={2} className="plot-in-l top-2" />
         <PlotPoint n={7.5} className="top-2 -right-4 hidden md:block" />
+        <PlotPoint n={7.8} className="top-28 -right-[14%] hidden md:block" />
         <ol aria-label="The plot so far" className="flex flex-col gap-6 md:grid md:grid-cols-5 md:gap-4">
           {timeline.map((t, i) => (
             <li key={t.year} className="flex items-start gap-4 md:flex-col md:gap-2">
@@ -74,7 +74,6 @@ export function Hero() {
         </ol>
       </div>
 
-      <PlotPoint n={12} className="plot-r bottom-0" />
     </section>
   );
 }
