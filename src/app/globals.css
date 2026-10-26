@@ -50,6 +50,8 @@
 }
 
 :root {
+  --page-pad: clamp(1rem, 4vw, 3rem);
+  --plot-inset: clamp(0.5rem, 2vw, 1.75rem);
   --bg: var(--color-sand-100);
   --surface: var(--color-sand-50);
   --sand: var(--color-sand-200);
@@ -87,7 +89,21 @@
   width: 100%;
   max-width: 80rem;
   margin-inline: auto;
-  padding-inline: clamp(1rem, 4vw, 3rem);
+  padding-inline: var(--page-pad);
+}
+
+/* Plot line gutters. `plot-l/r` sit in a container-page's padding; `plot-in-l/r` sit just outside a content box. Both land on the same x. */
+@utility plot-l {
+  left: calc(var(--page-pad) - var(--plot-inset));
+}
+@utility plot-r {
+  right: calc(var(--page-pad) - var(--plot-inset));
+}
+@utility plot-in-l {
+  left: calc(-1 * var(--plot-inset));
+}
+@utility plot-in-r {
+  right: calc(-1 * var(--plot-inset));
 }
 
 /* Type scale: serif leads display headlines, Inter Tight for UI, Caveat for notes only. */
@@ -135,6 +151,59 @@
   }
 }
 
+/* Intro: the "IA" monogram is cut, diced into cubes, and the cubes fall away (~1.4s, CSS only). */
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  background: var(--color-sky-900);
+  animation: intro-out 0.4s 1.05s var(--ease-out-expo) forwards;
+}
+.intro-mono {
+  animation: intro-hide 0.01s 0.62s forwards;
+}
+.intro-cut {
+  transform: rotate(var(--r)) scaleX(0);
+  transform-origin: left center;
+  animation: intro-cut 0.16s var(--d) ease-out forwards;
+}
+.intro-cube {
+  opacity: 0;
+  animation: intro-fall 0.6s 0.62s cubic-bezier(0.55, 0, 0.75, 0.2) forwards;
+}
+[data-intro-seen] .intro {
+  display: none;
+}
+@keyframes intro-out {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+@keyframes intro-hide {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes intro-cut {
+  to {
+    transform: rotate(var(--r)) scaleX(1);
+  }
+}
+@keyframes intro-fall {
+  0% {
+    opacity: 1;
+    transform: none;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--dx), var(--dy)) rotate(var(--rot));
+  }
+}
+
 html {
   background: var(--bg);
   color: var(--fg);
@@ -155,6 +224,9 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .intro {
+    display: none;
+  }
   *,
   *::before,
   *::after {
