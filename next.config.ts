@@ -15,4 +15,15 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default createMDX()(nextConfig);
+// Plugins are named by string so Turbopack can load them. `rehype-slug` gives `##` headings
+// ids for the journal's table of contents; `rehype-pretty-code` highlights code at build time.
+const withMDX = createMDX({
+  options: {
+    rehypePlugins: [
+      "rehype-slug",
+      ["rehype-pretty-code", { theme: { light: "github-light", dark: "github-dark" }, keepBackground: false }],
+    ],
+  },
+});
+
+export default withMDX(nextConfig);
