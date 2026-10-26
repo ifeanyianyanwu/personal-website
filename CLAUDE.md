@@ -9,6 +9,7 @@ Personal brand site for Ifeanyi Anyanwu (full-stack engineer, cook, chess learne
 - Use semantic color tokens so dark mode works: `bg-bg`, `bg-surface`, `bg-sand`, `text-fg`, `text-muted`, `border-line(-strong)`, `bg-sky` + `text-on-sky` (baby blue surfaces, same in both themes), `text-accent`, `bg-cta` + `text-cta-fg` (primary buttons), `bg-mist` + `text-mist-fg`, `plot` (the pen line). Raw palette (`sand-*`, `sky-*`) only when a color must not flip.
 - Approved design lives on the canvas: https://claude.ai/artifact/5DG3XqY1jfmQCXgqAncrtu (creative direction "The Plot", see PLAN.md).
 - Type utilities: `text-display` and `text-headline` (Instrument Serif), `text-title`, `text-lede`, `text-eyebrow` (Inter Tight), `text-hand` (Caveat, notes only); layout: `container-page`.
+- Work: one MDX file per project in `src/content/work/` exporting `meta` (shape in `src/lib/work-meta.ts`); `/work`, filters and case study pages read from it. Case study blocks (`Recipe`, `Chapter`, `Steps`, `Compare`, `Results`, `Blend`, `BigResult`) are global in MDX via `src/mdx-components.tsx`, and all are optional.
 - Primitives: `src/components/motion.tsx` (`Reveal`, `SplitText`), `src/components/ui.tsx` (`ButtonLink`, `LinkArrow`, `Section`, `Chip`, `Marquee`). Copy lives in `src/content/site.ts`.
 - All animation must respect `prefers-reduced-motion`.
 - Copy: no em dashes; avoid "comprehensive, paradigm, landscape, leverage, robust, nuanced".
