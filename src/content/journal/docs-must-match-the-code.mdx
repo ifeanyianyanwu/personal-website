@@ -1,0 +1,48 @@
+export const meta = {
+  title: { lead: "Docs must match", accent: "the code." },
+  date: "2026-10-26",
+  summary:
+    "I've read docs that described a different system, and written a report that had to hold up against my own repo. The rule I took from both is short.",
+  tags: ["Engineering", "Writing"],
+  serves: "Anyone writing a README, a report or an API guide",
+  ingredients: "A Mastercard sandbox, a final-year write-up, one rule",
+  related: { label: "Related case study", title: "CodeSprintMT", href: "/work/codesprintmt" },
+};
+
+## The docs said one *thing.*
+
+<Note>one day, solo, after a week of waiting shifts</Note>
+
+At CodeSprintMT 2026 I had one day, solo, to build a contactless charity donation platform on the Mastercard sandbox. The hard part wasn't the app. It was the documentation.
+
+The tap-to-pay guide was out of date. One feature was spread across pages that linked to more pages, and none of them told the whole story. OAuth 1.0a with RSA-SHA256 signatures and .p12 keystores is fiddly on a good day. With docs that confidently described behaviour the sandbox didn't have, every step became a small experiment.
+
+I got it working. But most of the day went to finding out what was true.
+
+## Then I was the one *writing.*
+
+My final-year project, [ConnectHub](/work/connecthub), came with a write-up. On a research project the write-up is part of the product: it's what examiners read, and what anyone picking the project up later will trust.
+
+So every claim in it had to hold up against what the code actually does. Not what I planned to build. What the code did.
+
+## The *rule.*
+
+> Only write claims you can point to in the repo.
+
+If a sentence says matching blends shared hobbies and meaning 60/40, there should be code that does exactly that. If I can't point to it, the sentence is a plan, and plans belong somewhere else.
+
+<Note>pointer = file + function</Note>
+
+One habit makes it cheap: leave a pointer next to the claim.
+
+```md title="README.md"
+## Matching
+Scores blend shared hobbies (60%) with meaning (40%).
+<!-- source: src/lib/matching.ts, blendScores() -->
+```
+
+<Caption>An example of the habit, not ConnectHub's code.</Caption>
+
+It takes a minute per claim. Compared with a day spent finding out a guide was wrong, that's cheap.
+
+Docs are a promise to whoever reads them next. Keep it small enough to keep.

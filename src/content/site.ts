@@ -155,3 +155,11 @@ export const contact = {
   headline: { lead: "Building something for health or AI?", accent: "Let's talk." },
   body: "Open to engineering roles and collaborations. Or just say hi, for the plot.",
 };
+
+/** Journal drafts in progress ("On the stove"). Listed on /journal, not linked. Remove one when its post ships. */
+export const stove = [
+  { title: "One day, one hackathon, one API", tag: "Hackathons" },
+  { title: "Small beats perfect", tag: "Craft" },
+  { title: "Why interest beats identity in networking", tag: "Research" },
+  { title: "From microbiology to machine learning", tag: "Career" },
+] as const;
