@@ -2,6 +2,7 @@ import Link from "next/link";
 import { contact, links, nav, profile } from "@/content/site";
 import { LinkArrow } from "@/components/ui";
 import { Year } from "@/components/year";
+import { PlotPoint } from "@/components/plot-point";
 
 export function Footer() {
   return (
@@ -12,8 +13,9 @@ export function Footer() {
           {contact.headline.lead} <em>{contact.headline.accent}</em>
         </h2>
         <p className="text-lede mt-8 max-w-[40ch] opacity-80">{contact.body}</p>
-        <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
-          <span aria-hidden className="size-4 rounded-full bg-on-sky" />
+        <div className="relative mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
+          <PlotPoint n={998} className="plot-in-l top-1/2" />
+          <span aria-hidden data-plot={999} className="size-4 rounded-full bg-on-sky" />
           <a
             href={`mailto:${profile.email}`}
             className="text-title break-all border-b-2 border-current pb-1.5 transition hover:opacity-80"
