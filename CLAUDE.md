@@ -10,6 +10,8 @@ Personal brand site for Ifeanyi Anyanwu (full-stack engineer, cook, chess learne
 - Approved design lives on the canvas: https://claude.ai/artifact/5DG3XqY1jfmQCXgqAncrtu (creative direction "The Plot", see PLAN.md).
 - Type utilities: `text-display` and `text-headline` (Instrument Serif), `text-title`, `text-lede`, `text-eyebrow` (Inter Tight), `text-hand` (Caveat, notes only); layout: `container-page`.
 - Work: one MDX file per project in `src/content/work/` exporting `meta` (shape in `src/lib/work-meta.ts`); `/work`, filters and case study pages read from it. Case study blocks (`Recipe`, `Chapter`, `Steps`, `Compare`, `Results`, `Blend`, `BigResult`) are global in MDX via `src/mdx-components.tsx`, and all are optional.
+- Gallery: Sanity (`src/sanity/`, Studio at `/studio`, config in `sanity.config.ts`). Env vars in `.env.example`; with no project ID the gallery shows its empty state. Data via `getPlotPoints()` (`"use cache"`, tag `plot-points`). Client components import types from `src/sanity/types.ts`, never `queries.ts`.
+- Layout: `src/app/layout.tsx` is bare (fonts, theme); site pages live in `src/app/(site)/` and get nav, footer, Lenis and the pen line from `SiteChrome`. URL data (`usePathname`, `params`, `searchParams`) must be read inside `<Suspense>`.
 - Primitives: `src/components/motion.tsx` (`Reveal`, `SplitText`), `src/components/ui.tsx` (`ButtonLink`, `LinkArrow`, `Section`, `Chip`, `Marquee`). Copy lives in `src/content/site.ts`.
 - All animation must respect `prefers-reduced-motion`.
 - Copy: no em dashes; avoid "comprehensive, paradigm, landscape, leverage, robust, nuanced".
