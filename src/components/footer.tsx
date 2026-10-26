@@ -1,0 +1,49 @@
+import Link from "next/link";
+import { contact, links, nav, profile } from "@/content/site";
+import { LinkArrow } from "@/components/ui";
+import { Year } from "@/components/year";
+
+export function Footer() {
+  return (
+    <footer id="contact" className="mt-auto bg-sky pt-32 pb-10 text-on-sky">
+      <div className="container-page">
+        <p className="text-eyebrow opacity-70">{contact.eyebrow}</p>
+        <h2 className="text-display mt-6 max-w-[12ch]">
+          {contact.headline.lead} <em>{contact.headline.accent}</em>
+        </h2>
+        <p className="text-lede mt-8 max-w-[40ch] opacity-80">{contact.body}</p>
+        <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
+          <span aria-hidden className="size-4 rounded-full bg-on-sky" />
+          <a
+            href={`mailto:${profile.email}`}
+            className="text-title break-all border-b-2 border-current pb-1.5 transition hover:opacity-80"
+          >
+            {profile.email}
+          </a>
+        </div>
+
+        <div className="mt-28 flex flex-col gap-8 border-t border-on-sky/20 pt-8 md:flex-row md:items-end md:justify-between">
+          <ul className="flex flex-wrap gap-x-8 gap-y-3 text-[0.95rem]">
+            {nav.map((item) => (
+              <li key={item.href}>
+                <Link href={item.href} className="transition hover:opacity-70">
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+            <li>
+              <LinkArrow href={links.linkedin} className="text-current">LinkedIn</LinkArrow>
+            </li>
+            <li>
+              <LinkArrow href={links.github} className="text-current">GitHub</LinkArrow>
+            </li>
+          </ul>
+          <p className="text-[0.95rem] opacity-75">
+            © <Year /> {profile.name} ·{" "}
+            <em className="font-serif text-lg">{profile.signature}</em>
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
+}
