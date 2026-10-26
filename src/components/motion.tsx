@@ -39,6 +39,7 @@ export function SplitText({
   className,
   delay = 0,
   accent,
+  afterIntro = false,
 }: {
   text: string;
   as?: SplitTag;
@@ -46,7 +47,11 @@ export function SplitText({
   delay?: number;
   /** Trailing words set in the serif italic accent style. */
   accent?: string;
+  /** Wait for the home intro on a first visit (see `components/home/intro.tsx`). */
+  afterIntro?: boolean;
 }) {
+  const introPlaying =
+    afterIntro && typeof document !== "undefined" && !("introSeen" in document.documentElement.dataset);
   const words = text.split(" ").map((w) => ({ w, accent: false }));
   const accentWords = accent?.split(" ").map((w) => ({ w, accent: true })) ?? [];
   const all = [...words, ...accentWords];
@@ -59,7 +64,7 @@ export function SplitText({
         initial="hidden"
         whileInView="show"
         viewport={{ once: true }}
-        transition={{ staggerChildren: 0.06, delayChildren: delay }}
+        transition={{ staggerChildren: 0.06, delayChildren: introPlaying ? delay + 1.1 : delay }}
       >
         {all.map(({ w, accent }, i) => (
           <span key={i} className="inline-block overflow-hidden pb-[0.08em] align-bottom">
