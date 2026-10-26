@@ -27,7 +27,7 @@ export function Proof() {
 /** The story, three chapters. Heading pins on desktop. Plot route: left gutter (16, 17). */
 export function Story() {
   return (
-    <section id="story" className="mt-28 bg-sky text-on-sky md:mt-36">
+    <section id="story" data-plot-surface className="mt-28 bg-sky text-on-sky md:mt-36">
       <div className="container-page relative flex flex-col gap-14 py-28 md:flex-row md:gap-16 md:py-36">
         <PlotPoint n={16} className="plot-l top-0" />
         <div className="md:sticky md:top-28 md:w-5/12 md:self-start">

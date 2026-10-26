@@ -10,7 +10,9 @@ export default function Home() {
     <>
       <Intro />
       <Hero />
-      <Marquee className="bg-sky py-6 font-serif text-[clamp(2rem,4vw,2.875rem)] text-on-sky" items={marquee} />
+      <div data-plot-surface>
+        <Marquee className="bg-sky py-6 font-serif text-[clamp(2rem,4vw,2.875rem)] text-on-sky" items={marquee} />
+      </div>
       <Work />
       <Proof />
       <Story />

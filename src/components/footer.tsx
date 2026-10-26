@@ -6,7 +6,7 @@ import { PlotPoint } from "@/components/plot-point";
 
 export function Footer() {
   return (
-    <footer id="contact" className="mt-auto bg-sky pt-32 pb-10 text-on-sky">
+    <footer id="contact" data-plot-surface className="mt-auto bg-sky pt-32 pb-10 text-on-sky">
       <div className="container-page">
         <p className="text-eyebrow opacity-70">{contact.eyebrow}</p>
         <h2 className="text-display mt-6 max-w-[12ch]">
@@ -14,6 +14,7 @@ export function Footer() {
         </h2>
         <p className="text-lede mt-8 max-w-[40ch] opacity-80">{contact.body}</p>
         <div className="relative mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
+          <PlotPoint n={997} className="plot-in-l -top-16" />
           <PlotPoint n={998} className="plot-in-l top-1/2" />
           <span aria-hidden data-plot={999} className="size-4 rounded-full bg-on-sky" />
           <a
