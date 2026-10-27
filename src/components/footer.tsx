@@ -40,6 +40,9 @@ export function Footer() {
             <li>
               <LinkArrow href={links.github} className="text-current">GitHub</LinkArrow>
             </li>
+            <li>
+              <LinkArrow href={links.cv} className="text-current">CV (PDF)</LinkArrow>
+            </li>
           </ul>
           <p className="text-[0.95rem] opacity-75">
             © <Year /> {profile.name} ·{" "}
