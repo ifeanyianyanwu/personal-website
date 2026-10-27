@@ -21,6 +21,8 @@ export const profile = {
 export const links = {
   linkedin: "https://www.linkedin.com/in/ifeanyianyanwu",
   github: "https://github.com/ifeanyianyanwu",
+  /** Built from the CV without phone, location or placeholders. Re-export when the CV changes. */
+  cv: "/cv/ifeanyi-anyanwu-cv.pdf",
 };
 
 export const nav = [
@@ -163,3 +165,82 @@ export const stove = [
   { title: "Why interest beats identity in networking", tag: "Research" },
   { title: "From microbiology to machine learning", tag: "Career" },
 ] as const;
+
+/** /about. Roles, titles and dates come from the CV; story from the profile. */
+export const about = {
+  headline: { lead: "The longer", accent: "version." },
+  lede: "Full-stack engineer in Malta, building toward AI for health in Nigeria. Here's how I got here, and the CV if you'd rather skim.",
+  note: "screwdrivers first, code second",
+  short:
+    "3+ years shipping production TypeScript. Frontend-strong, with NestJS, Node and Express on the back. First Class BSc, top 10 at CodeSprintMT 2026.",
+  story: [
+    { year: "Early", kind: "Life", title: "Screwdrivers first.", body: "Growing up in Nigeria, I took gadgets apart, fixed extension cords and built toy fans from small motors." },
+    { year: "2019", kind: "Study", title: "Not pharmacy.", body: "Pharmacy was the expected path. When it didn't happen, I started microbiology instead." },
+    { year: "2020", kind: "Study", title: "A mentor, then Aptech.", body: "Covid closed everything. A senior engineer pointed me to software, and I chose the thing I loved. Advanced Diploma, Distinction." },
+    { year: "2022", kind: "Work", title: "First production code.", body: "Meksoft: straight into a live React codebase, learning on the fly. The transcript system I helped build is still used by a university today.", href: "/work/meksoft" },
+    { year: "2023", kind: "Work", title: "Fast is a feature.", body: "DEIMR: moved a live marketplace from React to Next.js and took page loads from 9 to 15s down to about 1.5s. Mentored two interns.", href: "/work/deimr" },
+    { year: "2024", kind: "Work", title: "Cards, wallets, tests.", body: "MoneyPigeon: built a pre-launch crypto lending platform with virtual debit cards from scratch, helped shape its product and design, and took tests from 0% to 75%.", href: "/work/moneypigeon" },
+    { year: "Along the way", kind: "Life", title: "Pace and people.", body: "I also waited tables. I was usually the one they called for the heavy lifting." },
+    { year: "2025", kind: "Life", title: "Malta.", body: "Moved to finish my degree and started ConnectHub, my final-year project. Screen Guide and BabaPlug went live the same year.", href: "/work/connecthub" },
+    { year: "2026", kind: "Award", title: "First Class. Top 10.", body: "Graduated with First Class Honours, placed top 10 solo at CodeSprintMT, joined the chess club, and started full time at LetsDap.", href: "/work/codesprintmt" },
+  ],
+  roles: [
+    {
+      when: "Oct 2026 to now",
+      title: "Full-Stack Engineer",
+      org: "LetsDap",
+      meta: "Malta, remote · full-time · events platform",
+      points: ["Build and maintain NestJS APIs in TypeScript, with Docker for local development.", "Ship features end to end, from API integration to the frontend UI."],
+      stack: "NestJS · TypeScript · Docker · Jira",
+    },
+    {
+      when: "Mar 2024 to Oct 2025",
+      title: "Software Engineer",
+      org: "MoneyPigeon",
+      meta: "Remote · contract · pre-launch crypto lending, team of 7",
+      points: ["Built the product from scratch in Next.js: wallet sign-in, lending and borrowing flows.", "Integrated APIs for authentication and virtual debit card issuance.", "Shaped product and design direction with the CEO and designer.", "Wrote the test suite from scratch: 0% to 75% coverage, with CI on every pull request."],
+      stack: "Next.js · TypeScript · Jest · React Testing Library · GitHub Actions",
+    },
+    {
+      when: "Feb 2023 to Jan 2024",
+      title: "Frontend Engineer",
+      org: "DEIMR",
+      meta: "Cyprus, remote · full-time · electronics marketplace",
+      points: ["Page load from 9 to 15s down to ~1.5s (Lighthouse).", "Migrated React to Next.js; sole developer of the storefront and dashboard (~1,000 users).", "Interviewed, onboarded and mentored 2 frontend interns."],
+      stack: "Next.js · React · WebP · code-splitting",
+    },
+    {
+      when: "May 2022 to Dec 2022",
+      title: "Frontend Engineer",
+      org: "Meksoft",
+      meta: "Enugu, Nigeria · contract · transcript management",
+      points: ["Student and admin dashboards in React and TypeScript, live at 1 university.", "Replaced a weeks-long manual transcript process; Credo payments."],
+      stack: "React · TypeScript · REST · Credo",
+    },
+  ],
+  education: [
+    { title: "BSc (Hons) Computer Science, First Class", where: "University of Wolverhampton, via STC Malta · 2026" },
+    { title: "Advanced Diploma in Software Engineering, Distinction", where: "Aptech, Nigeria · 2020 to 2023" },
+  ],
+  kit: [
+    { label: "Languages", items: ["TypeScript", "JavaScript", "HTML", "CSS", "Python"] },
+    { label: "Frontend", items: ["React", "Next.js", "Redux", "Tailwind", "Lighthouse"] },
+    { label: "Backend & data", items: ["Node.js", "NestJS", "Express", "REST", "MongoDB", "Supabase", "Sanity"] },
+    { label: "Testing & delivery", items: ["Jest", "React Testing Library", "GitHub Actions", "Vercel", "Docker"] },
+    { label: "Integrations", items: ["Mastercard API", "OAuth 1.0a", "Credo", "Web3 wallets", "Google Analytics API"] },
+    { label: "Learning now", items: ["Machine learning", "scikit-learn", "XGBoost", "Robotics", "Docker, deeper"], learning: true },
+  ],
+  life: [
+    { what: "Pasta, and anything with a chopping board", note: "cooking" },
+    { what: "Chess club", note: "learning" },
+    { what: "Lawn tennis", note: "learning" },
+    { what: "The sketchbook", note: "reopening" },
+    { what: "Music, all over the place", note: "always on" },
+  ],
+  faith: "Jesus is King, and I've made it this far because of Him.",
+  next: {
+    lead: "AI that helps people eat, heal and live better,",
+    accent: "starting in Nigeria.",
+    body: "Going deeper into machine learning and robotics for healthcare, one small improvement at a time. If you're building in health or AI, I'd love to hear about it.",
+  },
+};

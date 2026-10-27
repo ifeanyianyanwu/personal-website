@@ -2,6 +2,9 @@ import Link from "next/link";
 
 type ButtonVariant = "primary" | "secondary" | "sky";
 
+/** Static files (like the CV PDF) aren't routes, so they get a plain anchor instead of `Link`. */
+const isFile = (href: string) => /\.\w+$/.test(href) && href.startsWith("/");
+
 const buttonStyles: Record<ButtonVariant, string> = {
   primary: "bg-cta text-cta-fg hover:opacity-90",
   secondary: "border border-line-strong text-fg hover:border-fg/50",
@@ -19,11 +22,15 @@ export function ButtonLink({
   variant?: ButtonVariant;
   className?: string;
 }) {
+  const cls = `inline-flex h-12 items-center gap-2 rounded-full px-6 text-[0.95rem] font-medium transition ${buttonStyles[variant]} ${className}`;
+  if (isFile(href))
+    return (
+      <a href={href} className={cls}>
+        {children}
+      </a>
+    );
   return (
-    <Link
-      href={href}
-      className={`inline-flex h-12 items-center gap-2 rounded-full px-6 text-[0.95rem] font-medium transition ${buttonStyles[variant]} ${className}`}
-    >
+    <Link href={href} className={cls}>
       {children}
     </Link>
   );
@@ -40,8 +47,10 @@ export function LinkArrow({
   className?: string;
 }) {
   const external = href.startsWith("http") || href.startsWith("mailto:");
+  const file = isFile(href);
+  const Tag = file ? "a" : Link;
   return (
-    <Link
+    <Tag
       href={href}
       {...(external && !href.startsWith("mailto:") ? { target: "_blank", rel: "noreferrer" } : {})}
       className={`group inline-flex items-center gap-1.5 font-medium text-accent ${className}`}
@@ -50,9 +59,9 @@ export function LinkArrow({
         {children}
       </span>
       <span aria-hidden className="transition-transform duration-300 ease-out-expo group-hover:translate-x-1">
-        {external ? "↗" : "→"}
+        {external ? "↗" : file ? "↓" : "→"}
       </span>
-    </Link>
+    </Tag>
   );
 }
 
