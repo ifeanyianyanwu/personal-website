@@ -1,9 +1,61 @@
 export const meta = {
   title: "MoneyPigeon",
   year: 2024,
-  summary: "Crypto lending frontend, wallet sign-in, and a test suite from zero.",
-  tags: ["Fintech", "Next.js", "Jest"],
+  summary: "A pre-launch crypto lending platform with virtual debit cards, built from scratch and shaped as a small team.",
+  tags: ["Fintech", "Next.js", "Web3", "Jest"],
   kinds: ["Production"],
-  status: "notes",
-  result: "Test coverage from 0% to 75%",
+  status: "case-study",
+  result: "Built from scratch, 0% to 75% test coverage",
+  when: "Mar 2024 to Oct 2025",
+  headline: { lead: "Crypto, on a", accent: "card." },
+  lede: "A pre-launch platform for lending and borrowing against crypto, with virtual debit cards to spend it. I built the product from scratch, helped shape what it became, and wrote the tests that kept it honest.",
+  teaser: "A crypto card platform built from scratch, with product and design shaped as a small team.",
 };
+
+<Recipe
+  serves="Crypto holders who want to lend, borrow and spend with a virtual card"
+  prep="Mar 2024 to Oct 2025 · contract, team of 7"
+  role="Built it from scratch: frontend, integrations, tests and CI. Shaped product and design direction with the CEO and designer"
+  ingredients="Next.js, TypeScript, REST APIs, wallet sign-in (Web3), Jest, React Testing Library, GitHub Actions"
+>
+  <BigResult value="0 → 75%" note="test coverage, written from scratch" />
+</Recipe>
+
+<Chapter n="01" title="The product.">
+
+MoneyPigeon was a pre-launch platform for lending and borrowing against crypto, with a virtual debit card so you could actually spend it.
+
+Pre-launch meant there was nothing to inherit. I built it from scratch in Next.js and TypeScript, along with the integrations that connected it to everything behind it.
+
+</Chapter>
+
+<Chapter n="02" title={<>Shaped <em>together.</em></>}>
+
+A team of seven doesn't leave room for staying in your lane. The CEO set the vision, and the product and design direction came out of the team putting our heads together.
+
+I worked hand in hand with the designer, brought my own ideas for where the design should go, and pitched ideas for the product itself. Then I built what we agreed on.
+
+</Chapter>
+
+<Chapter n="03" title={<>What a crypto card <em>takes.</em></>}>
+  <Steps>
+    <Step title="Wallet sign-in">Users sign in with their crypto wallet instead of a password, so the session has to follow the wallet.</Step>
+    <Step title="Authentication APIs">REST APIs for user authentication, integrated alongside the wallet flow.</Step>
+    <Step title="Virtual debit cards">Integrating card issuance, so a user can get a card and see where it stands.</Step>
+    <Step title="Lending and borrowing">Transaction flows where every screen deals with someone's money, so every state has to be clear.</Step>
+  </Steps>
+</Chapter>
+
+<Chapter n="04" title="Tests from zero.">
+
+I wrote the test suite from scratch with Jest and React Testing Library and took coverage from 0% to 75%.
+
+Then I set up GitHub Actions to run tests and linting on every pull request, so regressions showed up before code review instead of after it.
+
+</Chapter>
+
+<Chapter n="05" title="What I'd point to.">
+
+Most of this doesn't come with a headline number: building from nothing, the card integrations, the ideas that made it into the product. It's still the part I'd point to first. On a money product, the integrations are the product, and on a small team, so are your ideas.
+
+</Chapter>
