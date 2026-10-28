@@ -116,7 +116,8 @@ export function PlotLine() {
       if (!t) return;
       t.setAttribute("cx", `${tip.x}`);
       t.setAttribute("cy", `${tip.y}`);
-      t.setAttribute("class", inSurface(tip.x, tip.y) ? "fill-on-sky" : "fill-plot");
+      const fill = inSurface(tip.x, tip.y) ? "fill-on-sky" : "fill-plot";
+      if (t.getAttribute("class") !== fill) t.setAttribute("class", fill); // a class write restyles, so only on change
     };
 
     // The target line starts near the top of the screen and ends near the bottom by
@@ -187,7 +188,8 @@ export function PlotLine() {
       width={geo?.w ?? 0}
       height={geo?.h ?? 0}
       viewBox={geo ? `0 0 ${geo.w} ${geo.h}` : undefined}
-      className="pointer-events-none absolute inset-0 z-20 overflow-visible"
+      // Its own compositing layer: redrawing the line then never repaints the page content beneath it.
+      className="pointer-events-none absolute inset-0 z-20 overflow-visible will-change-transform"
     >
       {geo && (
         <>
