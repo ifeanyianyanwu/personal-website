@@ -29,7 +29,7 @@ export function Compare({ before, after, label }: { before: Side; after: Side; l
   return (
     <div
       ref={ref}
-      className="relative overflow-hidden rounded-[2rem] text-sky-900 has-[:focus-visible]:ring-4 has-[:focus-visible]:ring-accent"
+      className="relative overflow-hidden rounded-[2rem] text-sky-900 has-[:focus-visible]:ring-4 has-[:focus-visible]:ring-(--ring)"
     >
       <Panel side={after} className="items-end bg-sky-300 text-right">
         <After />
