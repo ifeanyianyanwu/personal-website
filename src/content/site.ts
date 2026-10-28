@@ -240,10 +240,11 @@ export const about = {
     { what: "The sketchbook", note: "reopening" },
     { what: "Music, all over the place", note: "always on" },
   ],
-  faith: "Jesus is King, and I've made it this far because of Him.",
-  mottos: [
-    { latin: "Amor fati.", meaning: "Love of fate. Take the good and the bad as one whole, and treat all of it as a lesson." },
-    { latin: "Virtus vincit aurum.", meaning: "Virtue beats gold. Character and integrity before money." },
+  /** What I live by: faith first, then the two mottos (Latin ones get `lang="la"`). */
+  creed: [
+    { line: "Jesus is King.", meaning: "I've made it this far because of Him." },
+    { line: "Amor fati.", latin: true, meaning: "Love of fate. Take the good and the bad as one whole, and treat all of it as a lesson." },
+    { line: "Virtus vincit aurum.", latin: true, meaning: "Virtue beats gold. Character and integrity before money." },
   ],
   next: {
     lead: "AI that helps people eat, heal and live better,",

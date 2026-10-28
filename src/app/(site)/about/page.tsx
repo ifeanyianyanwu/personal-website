@@ -131,12 +131,11 @@ export default function About() {
               </li>
             ))}
           </ul>
-          <p className="mt-5 text-muted">{about.faith}</p>
-          <dl aria-label="Mottos" className="mt-8 flex flex-col gap-5">
-            {about.mottos.map((m) => (
-              <div key={m.latin}>
-                <dt lang="la" className="font-serif text-[2rem] leading-none text-accent italic">
-                  {m.latin}
+          <dl aria-label="What I live by" className="mt-8 flex flex-col gap-5">
+            {about.creed.map((m) => (
+              <div key={m.line}>
+                <dt lang={"latin" in m ? "la" : undefined} className="font-serif text-[2rem] leading-none text-accent italic">
+                  {m.line}
                 </dt>
                 <dd className="mt-1.5 text-muted">{m.meaning}</dd>
               </div>
