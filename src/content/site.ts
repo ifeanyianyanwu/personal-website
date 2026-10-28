@@ -158,7 +158,7 @@ export const faq = [
   },
   {
     q: "What does “for the plot” mean?",
-    a: "Saying yes before I talk myself out of it. It's how I ended up in the CodeSprintMT top 10, and how the chess club and the sketchbook happened too.",
+    a: "Being spontaneous. When there's no real downside, I try it before I overthink it: the unplanned things make the best memories, teach me the most and lead somewhere I didn't expect. Signing up for CodeSprintMT, just because I could, was one of them.",
   },
 ] as const;
 
