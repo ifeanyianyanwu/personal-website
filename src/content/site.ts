@@ -241,6 +241,10 @@ export const about = {
     { what: "Music, all over the place", note: "always on" },
   ],
   faith: "Jesus is King, and I've made it this far because of Him.",
+  mottos: [
+    { latin: "Amor fati.", meaning: "Love your fate. Whatever happens, make it part of the plot." },
+    { latin: "Virtus vincit aurum.", meaning: "Virtue beats gold. Character first, money second." },
+  ],
   next: {
     lead: "AI that helps people eat, heal and live better,",
     accent: "starting in Nigeria.",
