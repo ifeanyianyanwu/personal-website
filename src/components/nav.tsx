@@ -96,13 +96,18 @@ export function Nav() {
 }
 
 // Icons swap via the `dark:` variant so server and client markup always match.
+// Starts on the device setting; a tap that lands back on it returns to "system" so the site follows the device again.
 function ThemeToggle() {
-  const { resolvedTheme, setTheme } = useTheme();
+  const { resolvedTheme, systemTheme, setTheme } = useTheme();
+  const toggle = () => {
+    const next = resolvedTheme === "dark" ? "light" : "dark";
+    setTheme(next === systemTheme ? "system" : next);
+  };
   return (
     <button
       type="button"
       aria-label="Toggle dark mode"
-      onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+      onClick={toggle}
       className="inline-flex size-11 items-center justify-center rounded-full text-muted ring-1 ring-line transition hover:text-fg"
     >
       <svg viewBox="0 0 24 24" className="size-4 dark:hidden" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>

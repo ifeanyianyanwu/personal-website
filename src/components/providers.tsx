@@ -7,7 +7,7 @@ import { ReactLenis } from "lenis/react";
 // LazyMotion + `m` components ship only the features we use (no layout or drag); strict catches a stray `motion.*`.
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <ThemeProvider attribute="data-theme" defaultTheme="light" disableTransitionOnChange>
+    <ThemeProvider attribute="data-theme" defaultTheme="system" disableTransitionOnChange>
       <LazyMotion features={domAnimation} strict>
         <MotionConfig reducedMotion="user">{children}</MotionConfig>
       </LazyMotion>
