@@ -14,8 +14,9 @@ export async function generateMetadata({ params }: PageProps<"/gallery/[slug]">)
 
 // No generateStaticParams: the feed changes from the Studio, so items render on first visit and stay cached.
 export default function Page({ params }: PageProps<"/gallery/[slug]">) {
+  // Holds a screen of space, so the footer never paints at the top and then jumps.
   return (
-    <Suspense>
+    <Suspense fallback={<div className="min-h-svh" />}>
       <Item params={params} />
     </Suspense>
   );
