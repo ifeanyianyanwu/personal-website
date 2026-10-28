@@ -15,7 +15,9 @@ Personal brand site for Ifeanyi Anyanwu (full-stack engineer, cook, chess learne
 - Gallery: Sanity (`src/sanity/`, Studio at `/studio`, config in `sanity.config.ts`). Env vars in `.env.example`; with no project ID the gallery shows its empty state. Data via `getPlotPoints()` (`"use cache"`, tag `plot-points`). Client components import types from `src/sanity/types.ts`, never `queries.ts`.
 - Layout: `src/app/layout.tsx` is bare (fonts, theme); site pages live in `src/app/(site)/` and get nav, footer, Lenis and the pen line from `SiteChrome`. URL data (`usePathname`, `params`, `searchParams`) must be read inside `<Suspense>`.
 - Primitives: `src/components/motion.tsx` (`Reveal`, `SplitText`), `src/components/ui.tsx` (`ButtonLink`, `LinkArrow`, `Section`, `Chip`, `Marquee`). Copy lives in `src/content/site.ts`.
-- All animation must respect `prefers-reduced-motion`.
+- All animation must respect `prefers-reduced-motion`. Motion uses `LazyMotion` (`domAnimation`, strict): import `m` from `motion/react-m`, never `motion.*`. Drawn `m.path`s get the `draw` class so they show finished for reduced motion.
+- Focus rings take `--ring`, set per surface in `globals.css` (accent on page surfaces, navy on `bg-sky`, `cta-fg` on `bg-cta`). Custom focus styles use `ring-(--ring)`, not `ring-accent`, which vanishes on baby blue in dark mode.
+- A `<Suspense>` around URL data needs a `fallback` that renders the default view (see `FullPlotFallback`, `JournalViewFallback`), or the page shifts on hydration.
 - Copy: no em dashes; avoid "comprehensive, paradigm, landscape, leverage, robust, nuanced".
 - `_private/` holds source material (CV, portrait, about-me.md) and is gitignored. Follow the privacy rules in PLAN.md.
 
