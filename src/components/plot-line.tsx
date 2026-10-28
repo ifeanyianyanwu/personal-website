@@ -121,11 +121,13 @@ export function PlotLine() {
 
     // The target line starts near the top of the screen and ends near the bottom by
     // the end of the page, so the line starts almost undrawn and finishes on the last point.
+    // clientHeight, not innerHeight: it stays put while a phone's toolbar collapses mid-scroll.
     const lengthForScroll = () => {
-      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const vh = document.documentElement.clientHeight;
+      const max = document.documentElement.scrollHeight - vh;
       const progress = max > 0 ? Math.min(window.scrollY / max, 1) : 1;
       if (progress >= 0.999) return total;
-      const target = window.innerHeight * (0.45 + 0.4 * progress) - svg.getBoundingClientRect().top;
+      const target = vh * (0.45 + 0.4 * progress) - svg.getBoundingClientRect().top;
       if (target <= at[0]) return 0;
       for (let i = 1; i < at.length; i++) {
         if (target < at[i]) {
@@ -141,16 +143,32 @@ export function PlotLine() {
       return;
     }
 
-    // Lenis already smooths the scroll, so the line follows it directly (no second easing).
+    // Lenis smooths wheel scrolling, so there the line follows the scroll directly (no second easing).
+    // Touch scrolling stays native and its scroll events arrive unevenly, so on touch screens the
+    // line eases toward its target every frame instead of jumping in steps behind the page.
+    const ease = window.matchMedia("(hover: none)").matches;
     let frame = 0;
-    const update = () => {
+    let drawn = lengthForScroll();
+    let last = 0;
+    const update = (now: number) => {
       frame = 0;
-      render(lengthForScroll());
+      const target = lengthForScroll();
+      if (!ease) return render(target);
+      const dt = last ? Math.min(now - last, 64) : 16;
+      drawn += (target - drawn) * (1 - Math.exp(-dt / 90));
+      if (Math.abs(target - drawn) < 0.5) {
+        drawn = target;
+        last = 0;
+      } else {
+        last = now;
+        frame = requestAnimationFrame(update);
+      }
+      render(drawn);
     };
     const onScroll = () => {
       if (!frame) frame = requestAnimationFrame(update);
     };
-    update();
+    render(drawn);
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
     return () => {
