@@ -6,6 +6,7 @@ import type { Compare } from "@/components/work/compare";
 
 export const profile = {
   name: "Ifeanyi Anyanwu",
+  initials: "IA",
   role: "Full-Stack Engineer",
   location: "Malta",
   headline: { lead: "I build things that work, then I make them", accent: "good." },
