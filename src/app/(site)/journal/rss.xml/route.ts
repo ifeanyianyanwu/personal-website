@@ -1,11 +1,6 @@
 import { profile } from "@/content/site";
 import { getJournal, plainTitle } from "@/lib/journal";
-
-const site = (
-  process.env.SITE_URL ||
-  (process.env.VERCEL_PROJECT_PRODUCTION_URL && `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`) ||
-  "http://localhost:3000"
-).replace(/\/$/, "");
+import { siteUrl as site } from "@/lib/site-url";
 
 const escape = (s: string) =>
   s.replace(/[<>&'"]/g, (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;", "'": "&apos;", '"': "&quot;" })[c]!);
