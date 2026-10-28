@@ -69,7 +69,7 @@ export default function About() {
               <li
                 key={k.label}
                 {...("learning" in k ? { "data-plot-surface": "" } : {})}
-                className={`rounded-[1.75rem] p-6 pb-7 ${"learning" in k ? "bg-sky text-on-sky" : "bg-surface ring-1 ring-line"}`}
+                className={`rounded-[1.75rem] p-6 pb-7 ${"learning" in k ? "bg-sky text-on-sky" : "bg-surface ring-1 ring-line"} ${"note" in k ? "sm:col-span-2 lg:col-span-3" : ""}`}
               >
                 <h3 className="text-hand text-[1.75rem] leading-none">{k.label}</h3>
                 <ul className="mt-4 flex flex-wrap gap-2">
@@ -79,6 +79,7 @@ export default function About() {
                     </li>
                   ))}
                 </ul>
+                {"note" in k && <p className="mt-4 max-w-[64ch] text-muted">{k.note}</p>}
               </li>
             ))}
           </ul>
