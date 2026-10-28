@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+import * as m from "motion/react-m";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -15,7 +15,7 @@ export function Reveal({
   className?: string;
 }) {
   return (
-    <motion.div
+    <m.div
       className={className}
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -23,7 +23,7 @@ export function Reveal({
       transition={{ duration: 0.9, ease, delay }}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -59,7 +59,7 @@ export function SplitText({
   return (
     <Tag className={className}>
       <span className="sr-only">{accent ? `${text} ${accent}` : text}</span>
-      <motion.span
+      <m.span
         aria-hidden
         initial="hidden"
         whileInView="show"
@@ -68,17 +68,17 @@ export function SplitText({
       >
         {all.map(({ w, accent }, i) => (
           <span key={i} className="inline-block overflow-hidden pb-[0.08em] align-bottom">
-            <motion.span
+            <m.span
               className={`inline-block ${accent ? "italic text-accent" : ""}`}
               variants={{ hidden: { y: "110%" }, show: { y: 0 } }}
               transition={{ duration: 1, ease }}
             >
               {w}
               {i < all.length - 1 && " "}
-            </motion.span>
+            </m.span>
           </span>
         ))}
-      </motion.span>
+      </m.span>
     </Tag>
   );
 }

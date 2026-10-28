@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+import * as m from "motion/react-m";
 
 /**
  * A hand-drawn loop around the portrait, drawn once when the hero appears.
@@ -16,10 +16,10 @@ export function PortraitScribble() {
       preserveAspectRatio="none"
       className="pointer-events-none absolute -inset-[12%] z-10 h-[124%] w-[124%] overflow-visible"
     >
-      <motion.path
+      <m.path
         d="M 72 6 C 98 14, 102 62, 86 86 C 68 108, 20 104, 8 76 C -4 48, 12 8, 48 4 C 62 2, 78 6, 84 16"
         fill="none"
-        className="stroke-plot"
+        className="draw stroke-plot"
         strokeWidth={4}
         strokeLinecap="round"
         vectorEffect="non-scaling-stroke"
