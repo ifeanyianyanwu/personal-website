@@ -1,6 +1,7 @@
 import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
 import { apiVersion, dataset, projectId } from "./src/sanity/env";
+import { PostingNote } from "./src/sanity/posting-note";
 import { plotPoint } from "./src/sanity/schema/plot-point";
 
 export default defineConfig({
@@ -13,4 +14,6 @@ export default defineConfig({
   apiVersion,
   schema: { types: [plotPoint] },
   plugins: [structureTool()],
+  // A reminder of what to post, above the navbar on every Studio screen.
+  studio: { components: { navbar: PostingNote } },
 });
