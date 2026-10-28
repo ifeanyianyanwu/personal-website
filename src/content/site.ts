@@ -141,7 +141,7 @@ export const faq = [
   { q: "Where are you based?", a: "Malta, and open to remote roles." },
   {
     q: "What is your stack?",
-    a: "TypeScript end to end: Next.js and React on the front, NestJS and Node on the back, Postgres (Supabase) or MongoDB for data, and Python for machine learning.",
+    a: "TypeScript end to end: Next.js and React on the front, NestJS and Node on the back, Postgres (Supabase) or MongoDB for data, and model APIs like Gemini for AI features.",
   },
   {
     q: "How do you use AI tools?",
@@ -170,7 +170,7 @@ export const stove = [
   { title: "One day, one hackathon, one API", tag: "Hackathons" },
   { title: "Small beats perfect", tag: "Craft" },
   { title: "Why interest beats identity in networking", tag: "Research" },
-  { title: "From microbiology to machine learning", tag: "Career" },
+  { title: "From microbiology to software", tag: "Career" },
 ] as const;
 
 /** /about. Roles, titles and dates come from the CV; story from the profile. */
@@ -238,8 +238,8 @@ export const about = {
     { label: "Frontend", items: ["React", "Next.js", "Redux", "Tailwind", "Lighthouse"] },
     { label: "Backend & data", items: ["Node.js", "NestJS", "Express", "REST", "MongoDB", "Supabase", "Sanity"] },
     { label: "Testing & delivery", items: ["Jest", "React Testing Library", "GitHub Actions", "Vercel", "Docker"] },
-    { label: "Integrations", items: ["Mastercard API", "OAuth 1.0a", "Credo", "Web3 wallets", "Google Analytics API"] },
-    { label: "Learning now", items: ["Machine learning", "scikit-learn", "XGBoost", "Robotics", "Docker, deeper"], learning: true },
+    { label: "Integrations", items: ["Gemini API", "Mastercard API", "OAuth 1.0a", "Credo", "Web3 wallets", "Google Analytics API"] },
+    { label: "Learning now", items: ["AI agents", "RAG", "AI features in production", "Docker, deeper"], learning: true },
     {
       label: "AI in the workflow",
       items: ["Claude Code", "GitHub Copilot", "ChatGPT"],
@@ -262,6 +262,6 @@ export const about = {
   next: {
     lead: "Software at the edge of what's possible,",
     accent: "built to be useful.",
-    body: "Going deeper into machine learning, AI agents and robotics, one small improvement at a time. If you're building something ambitious, I'd love to hear about it.",
+    body: "Going deeper into applied AI: agents, RAG and AI features that ship inside real products, one small improvement at a time. If you're building something ambitious, I'd love to hear about it.",
   },
 };
