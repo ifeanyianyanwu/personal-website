@@ -7,7 +7,7 @@ import type { NavbarProps } from "sanity";
 /** Ifeanyi's own reminder of what makes a good plot point. Edit freely. */
 const ideas = [
   ["Builds", "Demo days, launches, hackathons, robotics experiments, things built for LetsDap."],
-  ["Food", "A dish I'm proud of, a pasta I finally got right, the next dish once I've cooked it. Use the recipe field."],
+  ["Food", "A new dish or a recipe of my own, Nigerian classics like ofe akwu, a stir-fry, a pasta I finally got right. Use the recipe field."],
   ["Drawings", "Sketches as the sketchbook reopens: the first one, then one every so often."],
   ["Chess", "Club nights, a first win, a tournament, a position worth keeping."],
   ["Life", "Graduation, lawn tennis, gym milestones, the yes-for-the-plot moments."],

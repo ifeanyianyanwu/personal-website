@@ -12,7 +12,7 @@ export const profile = {
   headline: { lead: "I build things that work, then I make them", accent: "good." },
   glance: ["Full-stack engineer", "3+ years", "Next.js · NestJS · TypeScript", "Malta, open to remote"],
   intro:
-    "Full-stack engineer in Malta. 3+ years shipping Next.js, NestJS and TypeScript. Also: pasta, chess, and a sketchbook I'm reopening.",
+    "Full-stack engineer in Malta. 3+ years shipping Next.js, NestJS and TypeScript. Also: cooking, chess, and a sketchbook I'm reopening.",
   note: "that's me, probably thinking about the next dish I want to cook",
   signature: "For the plot.",
   email: "anyanwuifeanyi001@gmail.com",
@@ -35,7 +35,7 @@ export const nav = [
 
 export const marquee = [
   "Ships on time",
-  "Cooks on weekends",
+  "Experiments in the kitchen",
   "Learning chess",
   "Reopening the sketchbook",
   "Says yes, for the plot",
@@ -133,7 +133,7 @@ export const chapters = [
     id: "plot",
     num: "03",
     title: "For the plot.",
-    body: "I plan my weeks carefully and still say yes to the unexpected. In a busy week I saw CodeSprintMT on Instagram, felt underprepared, and signed up before I could overthink it. It landed on my day off, the morning after a waiting shift. I expected a rough build and finished a good one, and a few weeks later the email came: top 10, through to the finals. Pasta, the chess club, tennis and the sketchbook get the same yes.",
+    body: "I plan my weeks carefully and still say yes to the unexpected. In a busy week I saw CodeSprintMT on Instagram, felt underprepared, and signed up before I could overthink it. It landed on my day off, the morning after a waiting shift. I expected a rough build and finished a good one, and a few weeks later the email came: top 10, through to the finals. New dishes, the chess club, tennis and the sketchbook get the same yes.",
   },
 ] as const;
 
@@ -152,7 +152,10 @@ export const faq = [
     a: "On my own projects, yes, from the first sketch to the shipped UI. On a team, I'm the engineer who cares how it feels.",
   },
   { q: "What are you looking for?", a: "Engineering roles and collaborations on ambitious products, the kind that push what software can do." },
-  { q: "Do you actually cook?", a: "Yes. Mostly pasta, and anything that involves a chopping board." },
+  {
+    q: "Do you actually cook?",
+    a: "Yes, and I love it. Rice, fufu with Nigerian soups like ofe akwu, stir-fries with plenty of chopping, and new dishes and recipes of my own. Pasta is still my favourite.",
+  },
   {
     q: "What does “for the plot” mean?",
     a: "Saying yes before I talk myself out of it. It's how I ended up in the CodeSprintMT top 10, and how the chess club and the sketchbook happened too.",
@@ -247,7 +250,7 @@ export const about = {
     },
   ],
   life: [
-    { what: "Pasta, and anything with a chopping board", note: "cooking" },
+    { what: "Cooking: Nigerian soups, rice, stir-fries, pasta", note: "experimenting" },
     { what: "Chess club", note: "learning" },
     { what: "Lawn tennis", note: "learning" },
     { what: "The sketchbook", note: "reopening" },
