@@ -5,6 +5,7 @@ import * as m from "motion/react-m";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Chip } from "@/components/ui";
 import { categories, dayNumber, monthYear, type PlotPoint } from "@/sanity/types";
+import { ClipMark } from "./clip";
 import { Lightbox } from "./lightbox";
 import { SanityImage } from "./sanity-image";
 
@@ -173,6 +174,7 @@ function Scatter({ points, rows, onOpen }: { points: PlotPoint[]; rows: readonly
           style={{ left: `calc(${x}% - 3.25rem)`, top: `calc(${y}% - 3.25rem)`, rotate: `${((i * 37) % 11) - 5}deg` }}
         >
           <SanityImage image={p.images[0]} sizes="104px" className="size-full object-cover" />
+          {p.clips > 0 && <ClipMark small />}
           <span className="sr-only">
             {p.title}, {p.category}, {monthYear(p.date)}
           </span>
@@ -199,13 +201,14 @@ function Grid({ points, onOpen, className = "" }: { points: PlotPoint[]; onOpen:
               e.preventDefault();
               onOpen(i);
             }}
-            className={`block overflow-hidden rounded-3xl ${tones[i % tones.length]}`}
+            className={`relative block overflow-hidden rounded-3xl ${tones[i % tones.length]}`}
           >
             <SanityImage
               image={p.images[0]}
               sizes="(min-width: 1280px) 300px, (min-width: 768px) 33vw, 100vw"
               className="h-auto w-full transition-transform duration-500 ease-out-expo hover:scale-[1.03]"
             />
+            {p.clips > 0 && <ClipMark />}
           </a>
           <figcaption className="flex justify-between gap-3 px-1 text-[0.8125rem] text-muted">
             <span>

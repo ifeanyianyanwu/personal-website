@@ -178,9 +178,15 @@ importers:
       '@sanity/client':
         specifier: ^8.11.0
         version: 8.11.0
+      '@sanity/icons':
+        specifier: ^5.2.3
+        version: 5.2.3(react@19.3.1)
       '@sanity/image-url':
         specifier: ^2.1.1
         version: 2.1.1
+      '@sanity/ui':
+        specifier: ^4.4.10
+        version: 4.4.10(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(styled-components@6.6.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1))
       '@types/mdx':
         specifier: ^2.0.14
         version: 2.0.14

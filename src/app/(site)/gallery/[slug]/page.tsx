@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import { Clip } from "@/components/gallery/clip";
 import { SanityImage } from "@/components/gallery/sanity-image";
 import { PlotPoint } from "@/components/plot-point";
 import { getPlotPoint } from "@/sanity/queries";
@@ -45,9 +46,13 @@ async function Item({ params }: { params: Promise<{ slug: string }> }) {
         </div>
       )}
       <div className="mt-14 flex flex-col gap-6">
-        {point.images.map((image, i) => (
-          <SanityImage key={image.url} image={image} sizes="(min-width: 1280px) 1184px, 100vw" priority={i === 0} className="h-auto w-full rounded-[2rem]" />
-        ))}
+        {point.media.map((m, i) =>
+          m.kind === "clip" ? (
+            <Clip key={m.url} clip={m} className="rounded-[2rem]" />
+          ) : (
+            <SanityImage key={m.url} image={m} sizes="(min-width: 1280px) 1184px, 100vw" priority={i === 0} className="h-auto w-full rounded-[2rem]" />
+          ),
+        )}
       </div>
       {point.tags?.length ? <p className="mt-8 text-sm text-muted">{point.tags.map((t) => `#${t}`).join("  ")}</p> : null}
       <PlotPoint n={90} className="plot-l bottom-16" />
