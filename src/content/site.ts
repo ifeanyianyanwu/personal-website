@@ -132,8 +132,7 @@ export const chapters = [
     id: "plot",
     num: "03",
     title: "For the plot.",
-    body: "I plan my weeks carefully and still say yes to the unexpected. Pasta, the chess club, tennis, the sketchbook.",
-    // TODO(Ifeanyi): add the "say yes" story (2 to 3 sentences).
+    body: "I plan my weeks carefully and still say yes to the unexpected. In a busy week I saw CodeSprintMT on Instagram, felt underprepared, and signed up before I could overthink it. It landed on my day off, the morning after a waiting shift. I expected a rough build and finished a good one, and a few weeks later the email came: top 10, through to the finals. Pasta, the chess club, tennis and the sketchbook get the same yes.",
   },
 ] as const;
 
@@ -149,7 +148,10 @@ export const faq = [
   },
   { q: "What are you looking for?", a: "Engineering roles and collaborations, especially in AI and health." },
   { q: "Do you actually cook?", a: "Yes. Mostly pasta, and anything that involves a chopping board." },
-  // TODO(Ifeanyi): "What does 'for the plot' mean?" once the story is in.
+  {
+    q: "What does “for the plot” mean?",
+    a: "Saying yes before I talk myself out of it. I signed up for CodeSprintMT feeling underprepared, coded all day on my day off after a waiting shift, and made the top 10.",
+  },
 ] as const;
 
 export const contact = {
