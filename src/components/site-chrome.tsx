@@ -8,9 +8,17 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
   return (
     <>
       <SmoothScroll />
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[110] focus:rounded-full focus:bg-cta focus:px-5 focus:py-3 focus:text-sm focus:font-medium focus:text-cta-fg"
+      >
+        Skip to content
+      </a>
       <Nav />
       <div className="relative flex flex-1 flex-col">
-        <main className="flex-1">{children}</main>
+        <main id="main" tabIndex={-1} className="flex-1 outline-none">
+          {children}
+        </main>
         <Footer />
         <PlotLine />
       </div>

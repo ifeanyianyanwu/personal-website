@@ -207,6 +207,8 @@
 html {
   background: var(--bg);
   color: var(--fg);
+  /* Clears the fixed nav for anchor jumps and for focus scrolled into view by Tab. */
+  scroll-padding-top: 5rem;
 }
 
 body {
@@ -219,13 +221,32 @@ body {
 }
 
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--ring, var(--accent));
   outline-offset: 3px;
+}
+/*
+ * A ring sits just outside its element, so it takes the color that reads on the surface
+ * around it. Set on each surface's children: the nearest surface wins, and a focusable
+ * surface (a sky button, a navy card) gets the ring of the surface it sits on.
+ * Navy on baby blue in both themes, since the dark-mode accent is baby blue too.
+ */
+:is(.bg-bg, .bg-surface, .bg-sand) > * {
+  --ring: var(--accent);
+}
+.bg-sky > * {
+  --ring: var(--color-sky-900);
+}
+.bg-cta > * {
+  --ring: var(--cta-fg);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .intro {
     display: none;
+  }
+  /* Drawn lines (`m.path` with pathLength) show finished, like the pen line. */
+  .draw {
+    stroke-dasharray: none !important;
   }
   *,
   *::before,
