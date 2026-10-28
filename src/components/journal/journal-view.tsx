@@ -31,15 +31,30 @@ export function JournalSearch() {
     setText(q);
   }
   return (
+    <SearchField
+      value={text}
+      onChange={(v) => {
+        setText(v);
+        setQ(v);
+      }}
+    />
+  );
+}
+
+/** The empty search box in the prerendered HTML, so the header keeps its height on hydration. */
+export function JournalSearchFallback() {
+  return <SearchField value="" />;
+}
+
+function SearchField({ value, onChange }: { value: string; onChange?: (value: string) => void }) {
+  return (
     <label className="flex w-full flex-col gap-2 text-[0.8125rem] text-muted">
       Search the journal
       <input
         type="search"
-        value={text}
-        onChange={(e) => {
-          setText(e.target.value);
-          setQ(e.target.value);
-        }}
+        value={value}
+        readOnly={!onChange}
+        onChange={(e) => onChange?.(e.target.value)}
         placeholder={'Try "docs" or "hackathon"'}
         className="h-12 rounded-full bg-surface px-[1.125rem] text-[0.9375rem] text-fg ring-1 ring-line-strong outline-none placeholder:text-muted focus:ring-2 focus:ring-accent"
       />
@@ -55,7 +70,27 @@ export function JournalSearch() {
 export function JournalView({ posts }: { posts: JournalEntry[] }) {
   const [q, setQ] = useParam("q", "");
   const [tag, setTag] = useParam("tag", "All");
+  return <PostList posts={posts} q={q} tag={tag} setQ={setQ} setTag={setTag} />;
+}
 
+/** The unfiltered list in the prerendered HTML, so the page doesn't shift when the URL is read on hydration. */
+export function JournalViewFallback({ posts }: { posts: JournalEntry[] }) {
+  return <PostList posts={posts} q="" tag="All" />;
+}
+
+function PostList({
+  posts,
+  q,
+  tag,
+  setQ = () => {},
+  setTag = () => {},
+}: {
+  posts: JournalEntry[];
+  q: string;
+  tag: string;
+  setQ?: (q: string) => void;
+  setTag?: (tag: string) => void;
+}) {
   const tags = ["All", ...new Set(posts.flatMap((p) => p.tags))];
   const shown = useMemo(() => {
     const needle = q.trim().toLowerCase();

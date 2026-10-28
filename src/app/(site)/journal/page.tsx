@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { JournalSearch, JournalView } from "@/components/journal/journal-view";
+import { JournalSearch, JournalSearchFallback, JournalView, JournalViewFallback } from "@/components/journal/journal-view";
 import { SplitText } from "@/components/motion";
 import { PlotPoint } from "@/components/plot-point";
 import { stove } from "@/content/site";
@@ -30,7 +30,7 @@ export default async function Journal() {
         </div>
         <div className="flex w-full max-w-[22.5rem] flex-col items-start gap-3 md:items-end">
           {/* Search params are URL data, so the search box and the list render inside Suspense. */}
-          <Suspense>
+          <Suspense fallback={<JournalSearchFallback />}>
             <JournalSearch />
           </Suspense>
           <a href="/journal/rss.xml" className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-accent">
@@ -45,7 +45,7 @@ export default async function Journal() {
         <PlotPoint n={2} className="plot-l bottom-0" />
       </header>
 
-      <Suspense>
+      <Suspense fallback={<JournalViewFallback posts={posts} />}>
         <JournalView posts={posts} />
       </Suspense>
 

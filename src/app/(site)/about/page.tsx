@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { Suspense } from "react";
-import { FullPlot } from "@/components/about/full-plot";
+import { FullPlot, FullPlotFallback } from "@/components/about/full-plot";
 import { Reveal, SplitText } from "@/components/motion";
 import { PlotPoint } from "@/components/plot-point";
 import { ButtonLink, LinkArrow } from "@/components/ui";
@@ -50,7 +50,7 @@ export default function About() {
       </header>
 
       {/* The view (?view=cv) is URL data, so the timeline renders inside Suspense. */}
-      <Suspense>
+      <Suspense fallback={<FullPlotFallback />}>
         <FullPlot />
       </Suspense>
 

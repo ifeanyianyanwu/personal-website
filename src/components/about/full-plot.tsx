@@ -18,7 +18,6 @@ const tags: Record<string, string> = {
  */
 export function FullPlot() {
   const params = useSearchParams();
-  const cv = params.get("view") === "cv";
 
   // Next.js syncs useSearchParams with the native History API, so no server round trip.
   const setView = (view: "story" | "cv") => {
@@ -29,6 +28,15 @@ export function FullPlot() {
     window.history.replaceState(null, "", s ? `?${s}` : window.location.pathname);
   };
 
+  return <PlotView cv={params.get("view") === "cv"} setView={setView} />;
+}
+
+/** The story view in the prerendered HTML, so the page doesn't shift when the URL is read on hydration. */
+export function FullPlotFallback() {
+  return <PlotView cv={false} />;
+}
+
+function PlotView({ cv, setView }: { cv: boolean; setView?: (view: "story" | "cv") => void }) {
   return (
     <section aria-labelledby="plot-h" className="container-page relative pb-28 md:pb-36">
       <div className="mb-12 flex flex-wrap items-end justify-between gap-6">
@@ -46,7 +54,7 @@ export function FullPlot() {
                 key={v}
                 type="button"
                 aria-pressed={on}
-                onClick={() => setView(v)}
+                onClick={() => setView?.(v)}
                 className={`h-11 rounded-full px-5 text-[0.95rem] font-medium transition-colors ${on ? "bg-cta text-cta-fg" : "text-fg hover:bg-sand"}`}
               >
                 Read it as a {v === "cv" ? "CV" : "story"}

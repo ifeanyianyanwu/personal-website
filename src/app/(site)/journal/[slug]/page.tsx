@@ -29,9 +29,10 @@ export async function generateMetadata({ params }: PageProps<"/journal/[slug]">)
 }
 
 // The slug is URL data, so it's read inside Suspense (Partial Prefetching); known slugs still prerender.
+// The fallback holds a screen of space, so the footer never paints at the top and then jumps.
 export default function Page({ params }: PageProps<"/journal/[slug]">) {
   return (
-    <Suspense>
+    <Suspense fallback={<div className="min-h-svh" />}>
       <Post params={params} />
     </Suspense>
   );
