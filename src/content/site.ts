@@ -144,20 +144,24 @@ export const faq = [
     a: "TypeScript end to end: Next.js and React on the front, NestJS and Node on the back, Postgres (Supabase) or MongoDB for data, and Python for machine learning.",
   },
   {
+    q: "How do you use AI tools?",
+    a: "Every day, with guardrails. At LetsDap I build with Claude Code under rules our team set for the agents, and at CodeSprintMT, where the organisers encouraged AI, I paired with Copilot. They help me build, test, refactor, review and prototype. I still read what every change does and write the tests that prove it.",
+  },
+  {
     q: "Do you design too?",
     a: "On my own projects, yes, from the first sketch to the shipped UI. On a team, I'm the engineer who cares how it feels.",
   },
-  { q: "What are you looking for?", a: "Engineering roles and collaborations, especially in AI and health." },
+  { q: "What are you looking for?", a: "Engineering roles and collaborations on ambitious products, the kind that push what software can do." },
   { q: "Do you actually cook?", a: "Yes. Mostly pasta, and anything that involves a chopping board." },
   {
     q: "What does “for the plot” mean?",
-    a: "Saying yes before I talk myself out of it. I signed up for CodeSprintMT feeling underprepared, coded all day on my day off after a waiting shift, and made the top 10.",
+    a: "Saying yes before I talk myself out of it. It's how I ended up in the CodeSprintMT top 10, and how the chess club and the sketchbook happened too.",
   },
 ] as const;
 
 export const contact = {
   eyebrow: "Work with me",
-  headline: { lead: "Building something for health or AI?", accent: "Let's talk." },
+  headline: { lead: "Building something ambitious?", accent: "Let's talk." },
   body: "Open to engineering roles and collaborations. Or just say hi, for the plot.",
 };
 
@@ -172,7 +176,7 @@ export const stove = [
 /** /about. Roles, titles and dates come from the CV; story from the profile. */
 export const about = {
   headline: { lead: "The longer", accent: "version." },
-  lede: "Full-stack engineer in Malta, building toward AI for health in Nigeria. Here's how I got here, and the CV if you'd rather skim.",
+  lede: "Full-stack engineer in Malta, always building toward what's next. Here's how I got here, and the CV if you'd rather skim.",
   note: "screwdrivers first, code second",
   short:
     "3+ years shipping production TypeScript. Frontend-strong, with NestJS, Node and Express on the back. First Class BSc, top 10 at CodeSprintMT 2026.",
@@ -193,8 +197,12 @@ export const about = {
       title: "Full-Stack Engineer",
       org: "LetsDap",
       meta: "Malta, remote · full-time · events platform",
-      points: ["Build and maintain NestJS APIs in TypeScript, with Docker for local development.", "Ship features end to end, from API integration to the frontend UI."],
-      stack: "NestJS · TypeScript · Docker · Jira",
+      points: [
+        "Build and maintain NestJS APIs in TypeScript, with Docker for local development.",
+        "Ship features end to end, from API integration to the frontend UI.",
+        "Build, test, refactor and review with Claude Code under team rules and guardrails for the agents, with my own review and tests on every change.",
+      ],
+      stack: "NestJS · TypeScript · Docker · Claude Code · Jira",
     },
     {
       when: "Mar 2024 to Oct 2025",
@@ -232,6 +240,11 @@ export const about = {
     { label: "Testing & delivery", items: ["Jest", "React Testing Library", "GitHub Actions", "Vercel", "Docker"] },
     { label: "Integrations", items: ["Mastercard API", "OAuth 1.0a", "Credo", "Web3 wallets", "Google Analytics API"] },
     { label: "Learning now", items: ["Machine learning", "scikit-learn", "XGBoost", "Robotics", "Docker, deeper"], learning: true },
+    {
+      label: "AI in the workflow",
+      items: ["Claude Code", "GitHub Copilot", "ChatGPT"],
+      note: "For building, tests, refactors, reviews and prototypes, under rules and guardrails set for the agents. I read what every change does and write the tests that prove it.",
+    },
   ],
   life: [
     { what: "Pasta, and anything with a chopping board", note: "cooking" },
@@ -247,8 +260,8 @@ export const about = {
     { line: "Virtus vincit aurum.", latin: true, meaning: "Virtue beats gold. Character and integrity before money." },
   ],
   next: {
-    lead: "AI that helps people eat, heal and live better,",
-    accent: "starting in Nigeria.",
-    body: "Going deeper into machine learning and robotics for healthcare, one small improvement at a time. If you're building in health or AI, I'd love to hear about it.",
+    lead: "Software at the edge of what's possible,",
+    accent: "built to be useful.",
+    body: "Going deeper into machine learning, AI agents and robotics, one small improvement at a time. If you're building something ambitious, I'd love to hear about it.",
   },
 };
