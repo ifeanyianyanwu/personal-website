@@ -1,9 +1,10 @@
+import { Analytics } from "@vercel/analytics/next";
 import { Footer } from "@/components/footer";
 import { Nav } from "@/components/nav";
 import { PlotLine } from "@/components/plot-line";
 import { SmoothScroll } from "@/components/providers";
 
-/** Nav, footer, smooth scroll and the pen line around every site page (not the Studio). */
+/** Nav, footer, smooth scroll, the pen line and cookieless analytics around every site page (not the Studio). */
 export function SiteChrome({ children }: { children: React.ReactNode }) {
   return (
     <>
@@ -22,6 +23,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
         <Footer />
         <PlotLine />
       </div>
+      <Analytics />
     </>
   );
 }
