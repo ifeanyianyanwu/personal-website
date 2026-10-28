@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ClipMark } from "@/components/gallery/clip";
 import { SanityImage } from "@/components/gallery/sanity-image";
 import { PlotPoint } from "@/components/plot-point";
 import { LinkArrow } from "@/components/ui";
@@ -26,12 +27,13 @@ export async function Latest() {
         {points.map((p, i) => (
           <li key={p._id} className="w-[44vw] shrink-0 snap-start md:w-auto">
             <Link href={`/gallery/${p.slug}`} className="group flex flex-col gap-2.5">
-              <span className={`block aspect-square overflow-hidden rounded-[1.25rem] ${i % 2 ? "bg-sky" : "bg-sand"}`}>
+              <span className={`relative block aspect-square overflow-hidden rounded-[1.25rem] ${i % 2 ? "bg-sky" : "bg-sand"}`}>
                 <SanityImage
                   image={p.images[0]}
                   sizes="(min-width: 768px) 200px, 44vw"
                   className="size-full object-cover transition-transform duration-500 ease-out-expo group-hover:scale-105"
                 />
+                {p.clips > 0 && <ClipMark small />}
               </span>
               <span className="text-[0.875rem]">
                 <span className="font-medium">{p.title}</span>

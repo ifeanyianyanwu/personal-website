@@ -10,6 +10,15 @@ export type SanityImage = {
   lqip?: string;
 };
 
+export type Clip = {
+  url: string;
+  alt: string;
+  mimeType?: string;
+  poster?: string;
+};
+
+export type Media = ({ kind: "image" } & SanityImage) | ({ kind: "clip" } & Clip);
+
 export type PlotPoint = {
   _id: string;
   title: string;
@@ -20,7 +29,11 @@ export type PlotPoint = {
   tags?: string[];
   caption?: string;
   recipe?: string;
+  /** Photos only: the first is the cover. */
   images: SanityImage[];
+  /** Photos and clips, in order (detail page). */
+  media: Media[];
+  clips: number;
 };
 
 /** Sanity image URL at a given width, served as AVIF/WebP where supported. */
