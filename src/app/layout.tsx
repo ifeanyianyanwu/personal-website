@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Caveat, Inter_Tight, Instrument_Serif } from "next/font/google";
 import { Providers } from "@/components/providers";
 import { profile } from "@/content/site";
+import { siteUrl } from "@/lib/site-url";
 import "./globals.css";
 
 const interTight = Inter_Tight({
@@ -22,9 +23,13 @@ const caveat = Caveat({
   weight: "700",
 });
 
+// Pages set title and description; Open Graph and the card fall back to them, and the image comes from `opengraph-image`.
 export const metadata: Metadata = {
-  title: { default: profile.name, template: `%s · ${profile.name}` },
+  metadataBase: new URL(siteUrl),
+  title: { default: `${profile.name}, ${profile.role}`, template: `%s · ${profile.name}` },
   description: profile.intro,
+  openGraph: { type: "website", siteName: profile.name, locale: "en_GB" },
+  twitter: { card: "summary_large_image" },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
