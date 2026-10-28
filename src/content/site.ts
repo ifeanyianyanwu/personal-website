@@ -154,7 +154,7 @@ export const faq = [
   { q: "What are you looking for?", a: "Engineering roles and collaborations on ambitious products, the kind that push what software can do." },
   {
     q: "Do you actually cook?",
-    a: "Yes, and I love it. Rice, fufu with Nigerian soups like ofe akwu, stir-fries with plenty of chopping, and new dishes and recipes of my own. Pasta is still my favourite.",
+    a: "Yes, and I'll cook just about anything. From home, things like jollof rice, fried rice, rice and stew, ofe akwu with rice, and fufu with Nigerian soups. Beyond that, stir-fries with plenty of chopping, international dishes I want to try and recipes of my own. Pasta is still my favourite.",
   },
   {
     q: "What does “for the plot” mean?",
@@ -250,7 +250,7 @@ export const about = {
     },
   ],
   life: [
-    { what: "Cooking: Nigerian soups, rice, stir-fries, pasta", note: "experimenting" },
+    { what: "Cooking: Nigerian classics, dishes from everywhere, my own recipes", note: "experimenting" },
     { what: "Chess club", note: "learning" },
     { what: "Lawn tennis", note: "learning" },
     { what: "The sketchbook", note: "reopening" },
