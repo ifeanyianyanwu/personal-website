@@ -31,9 +31,9 @@ export function Nav() {
       }`}
     >
       <div className="container-page flex h-16 items-center justify-between">
-        <Link href="/" className="inline-flex items-center gap-2.5 font-semibold tracking-tight">
+        <Link href="/" aria-label={`${profile.name}, home`} className="inline-flex items-center gap-2.5 font-semibold tracking-tight">
           <DiceMark />
-          {profile.name}
+          <span aria-hidden>{profile.initials}</span>
         </Link>
 
         <nav aria-label="Main" className="hidden items-center gap-8 md:flex">

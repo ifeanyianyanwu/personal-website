@@ -9,12 +9,30 @@ import { PortraitScribble } from "./portrait-scribble";
  * Plot route through the hero: down the left gutter (1, 2), along the timeline
  * dots (3 to 7, eased by 1.5, 7.5 and 7.8), then on to the right gutter of the work section. The portrait gets
  * its own drawn-on-load loop so the scroll line only ever travels down the page.
- * Mobile stacks text → timeline → portrait so the same order still reads top to bottom.
+ * Mobile stacks name → text → timeline → portrait so the same order still reads top to bottom.
  */
 export function Hero() {
+  const [first, ...rest] = profile.name.split(" ");
+
   return (
-    <section className="container-page relative grid gap-x-6 gap-y-14 pt-28 pb-24 [grid-template-areas:'text'_'time'_'photo'] md:pt-36 md:pb-32 md:grid-cols-[7fr_5fr] md:[grid-template-areas:'text_photo'_'time_time']">
+    <section className="container-page relative grid gap-x-6 gap-y-14 pt-28 pb-24 [grid-template-areas:'name'_'text'_'time'_'photo'] md:gap-y-10 md:pt-24 md:pb-32 md:grid-cols-[7fr_5fr] md:[grid-template-areas:'name_name'_'text_photo'_'time_time']">
       <PlotPoint n={1} className="plot-l top-0" />
+
+      {/* Masthead: the name set edge to edge. textLength keeps it flush at every width. */}
+      <div className="border-b border-line-strong pb-6 [grid-area:name]">
+        <svg role="img" aria-label={profile.name} viewBox="0 0 1000 168" className="block h-auto w-full overflow-visible">
+          <text
+            x="0"
+            y="128"
+            textLength="1000"
+            lengthAdjust="spacingAndGlyphs"
+            className="fill-fg text-[166px]"
+            style={{ fontFamily: "var(--font-serif)" }}
+          >
+            {first} <tspan className="fill-accent italic">{rest.join(" ")}</tspan>
+          </text>
+        </svg>
+      </div>
 
       <div className="flex flex-col gap-8 [grid-area:text]">
         <ul aria-label="At a glance" className="flex flex-wrap gap-2">
@@ -28,7 +46,7 @@ export function Hero() {
             </li>
           ))}
         </ul>
-        <SplitText as="h1" className="text-display" text={profile.headline.lead} accent={profile.headline.accent} afterIntro />
+        <SplitText as="h1" className="text-display text-[clamp(3.75rem,6.6vw,6.5rem)]! leading-[0.88]!" text={profile.headline.lead} accent={profile.headline.accent} afterIntro />
         <Reveal delay={0.3} className="flex flex-wrap gap-3">
           <ButtonLink href="#contact">Work with me</ButtonLink>
           <ButtonLink href="#work" variant="secondary">
