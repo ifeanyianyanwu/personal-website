@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+import * as m from "motion/react-m";
 
 const paths = {
   down: "M 4 10 C 90 14, 150 30, 200 70 S 300 98, 396 96",
@@ -16,8 +16,9 @@ export function PlotChart({ label, from, to, trend }: { label: string; from: str
       </figcaption>
       <svg aria-hidden viewBox="0 0 400 110" preserveAspectRatio="none" className="h-[110px] w-full">
         <line x1="0" y1="104" x2="400" y2="104" stroke="var(--color-sand-300)" />
-        <motion.path
+        <m.path
           d={paths[trend]}
+          className="draw"
           fill="none"
           stroke="var(--color-sky-500)"
           strokeWidth={5}

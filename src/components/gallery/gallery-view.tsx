@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { motion } from "motion/react";
+import * as m from "motion/react-m";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Chip } from "@/components/ui";
 import { categories, dayNumber, monthYear, type PlotPoint } from "@/sanity/types";
@@ -146,11 +146,11 @@ function Scatter({ points, rows, onOpen }: { points: PlotPoint[]; rows: readonly
       ))}
       <svg aria-hidden width={size.w} height={size.h} className="absolute inset-0">
         {size.w > 0 && (
-          <motion.path
+          <m.path
             key={placed.map((s) => s.p._id).join()} // redraw when the filter changes, not on resize
             d={d}
             fill="none"
-            className="stroke-plot"
+            className="draw stroke-plot"
             strokeWidth={4}
             strokeLinecap="round"
             strokeLinejoin="round"
