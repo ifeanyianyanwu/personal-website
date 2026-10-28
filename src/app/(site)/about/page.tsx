@@ -132,6 +132,16 @@ export default function About() {
             ))}
           </ul>
           <p className="mt-5 text-muted">{about.faith}</p>
+          <dl aria-label="Mottos" className="mt-8 flex flex-col gap-5">
+            {about.mottos.map((m) => (
+              <div key={m.latin}>
+                <dt lang="la" className="font-serif text-[2rem] leading-none text-accent italic">
+                  {m.latin}
+                </dt>
+                <dd className="mt-1.5 text-muted">{m.meaning}</dd>
+              </div>
+            ))}
+          </dl>
           <LinkArrow href="/gallery" className="mt-3 min-h-11">
             See the plot points
           </LinkArrow>
