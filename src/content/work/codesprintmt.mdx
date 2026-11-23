@@ -2,24 +2,24 @@ export const meta = {
   title: "CodeSprintMT",
   year: 2026,
   order: 3,
-  summary: "Contactless charity donations on the Mastercard sandbox, solo in one day.",
-  tags: ["Hackathon", "Mastercard API", "OAuth 1.0a"],
+  summary: "Contactless charity donations for the Mastercard Donate API, solo in one day.",
+  tags: ["Next.js", "Supabase", "Mastercard Donate API", "OAuth 1.0a"],
   kinds: ["Hackathons"],
   status: "case-study",
-  result: "Top 10, Open Category",
+  result: "Top 10 finalist, Open Category",
   when: "July 2026 · one day",
   headline: { lead: "One day. One API.", accent: "Top 10." },
-  lede: "A solo, day-long build of a contactless charity donation platform at CodeSprintMT 2026. It finished in the top 10 of the Open Category.",
-  teaser: "A solo, day-long build on the Mastercard sandbox. Top 10 in the Open Category.",
+  lede: "A solo, day-long build of a contactless charity donation platform at CodeSprintMT 2026, from the donor app to a signed Mastercard Donate integration. It made the Top 10 finalists in the Open Category.",
+  teaser: "A solo, day-long build against the Mastercard Donate API. Top 10 in the Open Category.",
 };
 
 <Recipe
-  serves="Charity donors paying contactless, and the admins who run it"
+  serves="Charity donors paying contactless, and the admins, volunteers and auditors who run the campaigns"
   prep="One day, solo · CodeSprint Malta at ICE Campus"
-  role="Everything: donor app, admin dashboard and the Mastercard integration"
-  ingredients="Mastercard sandbox, OAuth 1.0a (RSA-SHA256), .p12 keystores, role-based access, live ledger, multi-currency"
+  role="Everything past the first UI draft: backend, database, auth, the Mastercard integration and the admin tools"
+  ingredients="Next.js, Supabase (Postgres, row-level security), Mastercard Donate API, OAuth 1.0a (RSA-SHA256), .p12 keystores, multi-currency"
 >
-  <BigResult value="Top 10" note="Open Category, CodeSprintMT 2026" />
+  <BigResult value="Top 10" note="Open Category finalist, CodeSprintMT 2026" />
 </Recipe>
 
 <Chapter n="01" title="The week before.">
@@ -32,31 +32,43 @@ I showed up anyway.
 
 <Chapter n="02" title="The brief.">
 
-Build a contactless charity donation platform from scratch, in one day: a donor app, an admin dashboard, role-based access, a live transaction ledger and multi-currency support.
+The brief opened with a line I liked: cash is disappearing, but the church collection plate, the street fundraiser and the school bake sale are still cash-first. Charities lose spontaneous gifts every day because they can't take a card.
 
-The organisers encouraged AI tools, so I paired with Copilot and checked what each change did before keeping it.
+The task was to close that gap in one day, alone, by 5 PM. That meant a donor app and an admin tool, with roles for admins, volunteers and auditors, a live ledger, reconciliation against Mastercard transaction IDs, an audit log, CSV and PDF export, and support for several currencies and four languages.
+
+The brief fixed what to build. How to build it was up to me. I went with Next.js on top of Supabase and put the rules in the database: row-level security enforces the three roles, and a Postgres trigger keeps each campaign's total right as donations come in or get refunded. Nothing in the app code can forget to update it.
+
+The organisers expected AI tools, and I used two. v0 drafted the first pass of the UI, and Copilot helped while I built everything underneath it. I checked what each change did before keeping it, which mattered later: the judges could ask any finalist to explain any part of their code.
 
 </Chapter>
 
-<Chapter n="03" title={<>Docs versus <em>sandbox.</em></>} intro="Then came the Mastercard sandbox, and the day got interesting. Drag, or scroll, to compare. A diagram drawn for this page." wide>
+<Chapter n="03" title={<>Docs versus <em>reality.</em></>} intro="Then came the Mastercard integration, and the day got interesting. Drag, or scroll, to compare. A diagram drawn for this page." wide>
   <Compare
     label="Compare what the Mastercard documentation described with what the integration actually took"
     before={{ label: "What the docs said", note: "One guide", diagram: "docs-said" }}
-    after={{ label: "What it actually took", note: "Many linked pages", diagram: "docs-took" }}
+    after={{ label: "What it actually took", note: "Nine pages", diagram: "docs-took" }}
   />
 </Chapter>
 
 <Chapter n="04" title="Where the day went.">
 
-OAuth 1.0a with RSA-SHA256 signatures, .p12 keystores, and documentation that confidently described behaviour the sandbox didn't have.
+OAuth 1.0a with RSA-SHA256 signatures, a .p12 keystore, and documentation that was out of date.
 
-The tap-to-pay guide was out of date. The parts of one feature were spread across pages that linked to more pages, and none of them told the whole story. I pieced them together into what I actually needed. The kind of problem that doesn't care how tired you are.
+The tap-to-pay guide no longer matched the API. The parts of one feature were spread across pages that linked to more pages, and none of them told the whole story. I pieced them together into what I actually needed.
 
-It took a while, but I got it working.
+The signing key was its own small fight. Mastercard gives you a .p12 file, so I stored it base64-encoded and parsed it at runtime. By the end, the loader stripped stray whitespace, retried with an empty password, and searched three different places in the file for the private key. Every request carries a SHA-256 hash of its body and an RSA-SHA256 signature over the whole thing. The kind of problem that doesn't care how tired you are.
+
+Then the Mastercard sandbox went down. The judges told every team that calls would fail and to simulate for now. I kept the signed client as written and added a mock mode that switches on when credentials are missing and answers in the same shapes as the real API: approvals, declines, insufficient funds. The tap itself was always going to be simulated, because the sandbox doesn't support tap to pay for donations. When the sandbox comes back, the real calls are already written.
 
 </Chapter>
 
 <Chapter n="05" title="Next year.">
+
+By the deadline, 16 of the brief's 20 requirements were fully in place and three more were partly there. Receipts could be downloaded but not emailed, campaigns had no start or end dates, and the dashboard polled every few seconds instead of using websockets. I didn't get to the optional mobile app.
+
+It was enough for the [Top 10 finalists in the Open Category](https://codesprintmalta.edu.mt/code-sprint-2026/). Being shortlisted meant a viva a few days later, where I walked the judges through how my code worked. That's where checking every AI suggestion before keeping it paid off: I could explain any part of it, because I'd read all of it.
+
+With a second day, I'd send real email receipts, confirm each transaction with Mastercard on the server before recording it, and put tests around the signing code.
 
 The organisers at ICE Campus ran a tight ship: a clear brief, good structure and fair judging. The kind of competition that makes you want to come back.
 
