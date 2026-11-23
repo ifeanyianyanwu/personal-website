@@ -6,7 +6,7 @@ export const meta = {
   tags: ["Next.js", "Express", "MongoDB", "TMDB"],
   kinds: ["Side projects"],
   status: "case-study",
-  result: "Solo, from an empty repo to a live client and API",
+  result: "Mobile Lighthouse 74 → 84",
   when: "Nov 2024 to Jan 2025",
   headline: { lead: "Find what to watch,", accent: "then keep it." },
   lede: "I wanted to keep up with new movies, and to prove I could take a full-stack app from an empty repo to production on my own. Screen Guide is that app: a Next.js client on TMDB for discovery, trailers and where to stream, plus my own Express and MongoDB API for accounts and a watchlist.",
@@ -19,7 +19,7 @@ export const meta = {
   role="Sole engineer: client, API, data model, auth and deployment. The UI follows a design file, which I extended for the pages it didn't cover"
   ingredients="Next.js 14, TypeScript, Tailwind, shadcn/ui, GSAP, Express, MongoDB, Zod, JWT, TMDB API, npm workspaces"
 >
-  <BigResult value="48/48" note="commits mine, from the first scaffold to the deployed API" />
+  <BigResult value="84" note="Mobile Lighthouse Performance on the home page, up from 74" />
 </Recipe>
 
 <Chapter n="01" title={<>One place to decide <em>what to watch.</em></>}>
@@ -87,5 +87,28 @@ Search runs in the browser. The query is debounced, and the search term, media t
 The client runs on Vercel and the API on Render. It has home, movie and TV hubs, detail pages with cast, trailers, reviews, similar titles and where to stream, search, accounts and a watchlist.
 
 To ship, I cut scope on the last day. Password recovery and a few other account features show a "not available yet" message instead of half-working.
+
+</Chapter>
+
+<Chapter n="07" title={<>Measure, then <em>fix.</em></>}>
+
+The home page looked finished, so when I came back to it I measured before changing anything. On a phone, the largest text on the page, the hero title, took 3.95 seconds to appear. It wasn't in the server HTML at all: it only rendered once all the JavaScript had loaded and an animation library had run. Behind it, five hero backdrops of about 900 KB each loaded at once.
+
+<Steps>
+  <Step title="Render the hero on the server">The title is in the first HTML response now, and the same entrance animations run in CSS.</Step>
+  <Step title="Load GSAP on demand">The page-in banners are CSS too. GSAP only loads when someone clicks a link.</Step>
+  <Step title="Drop a dependency">I replaced Framer Motion with CSS transitions and a small IntersectionObserver hook, then removed the package.</Step>
+  <Step title="Right-size the images">Hero backdrops are 1280 px AVIF or WebP files, and only the visible slide and its neighbours load.</Step>
+</Steps>
+
+Along the way, the animated links became real links again, so they work with a keyboard and open in a new tab. Every Lighthouse run was in an incognito window.
+
+  <Results>
+    <Stat value="1.4 MB">of images on first load, down from 3.3 MB</Stat>
+    <Stat value="124 kB">of JavaScript loaded up front, down from 189 kB</Stat>
+    <Stat value="96">desktop Lighthouse Performance, up from 94</Stat>
+  </Results>
+
+The lesson: a page can look finished and still hide its main content behind JavaScript. Measuring first told me which element was slow, and why.
 
 </Chapter>
