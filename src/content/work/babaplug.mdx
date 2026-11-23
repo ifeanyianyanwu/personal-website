@@ -1,10 +1,73 @@
 export const meta = {
-  title: "BabaPlug",
+  title: "BabaPlug Blog",
   year: 2025,
   order: 2,
-  summary: "Product reviews and buying guides, with first-party analytics.",
-  tags: ["Next.js", "Sanity", "MongoDB"],
-  kinds: ["Side projects"],
-  status: "notes",
-  result: "Live",
+  summary: "An editor-run blog for Buyers Worth Africa, with first-party reader analytics. Built, not released.",
+  tags: ["Next.js", "Sanity", "MongoDB", "TypeScript"],
+  kinds: ["Production"],
+  status: "case-study",
+  result: "88% rewritten from the template",
+  when: "Apr to Jun 2025",
+  headline: { lead: "Editors publish,", accent: "the site listens." },
+  lede: "Buyers Worth Africa wanted a blog for its BabaPlug brand that its team could run without a developer, and that would show which articles kept readers engaged. I turned a paid Next.js template into a Sanity-powered publication and built my own reader analytics on top of Google Analytics.",
+  teaser: "How I turned an off-the-shelf blog template into a publication that tracks how it's read.",
 };
+
+<Recipe
+  serves="Buyers Worth Africa's editors, running the BabaPlug blog themselves, and readers into digital commerce"
+  prep="Apr to Jun 2025 · client build, 10 weeks, never released"
+  role="Sole engineer: content model, every page, search, and the reader analytics pipeline"
+  ingredients="Next.js 15, TypeScript, Sanity, MongoDB, Google Analytics 4 and its Data API, TanStack Query, Tailwind, Vercel"
+>
+  <BigResult value="88%" note="of the code written after the template import, counted with git blame" />
+</Recipe>
+
+<Chapter n="01" title={<>A template is not a <em>publication.</em></>}>
+
+I started from a paid blog template. It gave me Next.js, Sanity and a layout on day one, but it also came with sign-in, payments, a second database, author pages and docs pages that this blog didn't need.
+
+I treated it as scaffolding, not the product. One large refactor removed what didn't fit and replaced the template's Sanity helpers with my own query layer and content model. A second pass cleared out its visual assets. By the end, 12% of the code still traced back to the template.
+
+</Chapter>
+
+<Chapter n="02" title={<>Editors run <em>everything.</em></>}>
+
+The client's rule was that changing content should never need a developer, so everything lives in Sanity. A post type field (Exclusive, Featured, Basic, Buying Guide) decides where a post appears on the home page. Tags are their own documents, with colours editors pick. Buttons and tables are blocks editors can drop into any article.
+
+Reading time fills itself in as the editor types: a custom Studio field counts 200 words a minute plus 30 seconds per image. Search runs as a Sanity query too, so anything an editor publishes is searchable straight away.
+
+</Chapter>
+
+<Chapter n="03" title={<>Knowing who <em>reads.</em></>} intro="Google Analytics reports totals. The client wanted to see one reader on one article, so I built a pipeline next to it.">
+  <Steps>
+    <Step title="Borrow GA's identity">Each event carries the reader's Google Analytics client ID, so my records can be joined back to GA later.</Step>
+    <Step title="Name every link">Every link and button in an article is tagged with the content block it came from. A click is sent straight away, so an editor can see which call to action in which post people actually used.</Step>
+    <Step title="Survive the tab closing">When the reader leaves, a final update with time on page goes out as a keepalive request, so it still arrives after the tab is gone.</Step>
+    <Step title="One record, not ten">The server keeps one record per reader, per post, per day. It sets identity once, fills empty fields, and appends clicks, so a returning reader isn't counted twice.</Step>
+    <Step title="Join it to GA">A daily job pulls age and gender from the GA Data API and writes them onto each reader's record, next to that reader's behaviour.</Step>
+  </Steps>
+</Chapter>
+
+<Chapter n="04" title="Real browsers.">
+
+The day after the first version went in, real browsers found the gaps. Time on page was arriving in milliseconds. Many readers deny location, so location became optional. IP capture needed a fallback. Seven pull requests merged that day.
+
+I tested the whole pipeline with three test readers: time on page, link clicks and demographics all landed in one record per reader.
+
+</Chapter>
+
+<Chapter n="05" title="The build.">
+  <Results>
+    <Stat value="10">weeks from template import to the last merged pull request</Stat>
+    <Stat value="11">pull requests merged, every commit in them mine</Stat>
+    <Stat value="3">test readers tracked end to end, joined to GA demographics</Stat>
+  </Results>
+</Chapter>
+
+<Chapter n="06" title={<>What I'd finish before <em>launch.</em></>}>
+
+The budget ran out before release, so the blog was finished and tested but never launched. The client told me the build was a well-executed version of the idea.
+
+Launch would have needed a privacy pass first. The cookie banner and policy page were in place, but tracking, analytics and the location prompt should wait until a reader accepts, and the policy should list every field collected. I'd also move the read counter to the server, turn the 90-day expiry for activity data back on, and let pages cache, so revalidating from Sanity has something to clear.
+
+</Chapter>
