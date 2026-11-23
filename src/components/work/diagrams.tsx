@@ -130,7 +130,77 @@ function DocsTook() {
   );
 }
 
+/** Sequence diagrams: five lanes, messages run top to bottom. */
+const lanes = { browser: 64, app: 192, stripe: 320, webhook: 448, db: 576 } as const;
+type Lane = keyof typeof lanes;
+const laneNames: Record<Lane, string> = { browser: "Browser", app: "App", stripe: "Stripe", webhook: "Webhook", db: "Database" };
+
+function Lanes({ fill }: { fill: string }) {
+  return (
+    <>
+      {(Object.keys(lanes) as Lane[]).map((l) => (
+        <g key={l}>
+          <path d={`M ${lanes[l]} 54 L ${lanes[l]} 334`} {...dashed} strokeWidth={1.5} />
+          <rect x={lanes[l] - 56} y="12" width="112" height="42" rx="12" fill={fill} stroke="currentColor" strokeWidth="2.5" />
+          <text x={lanes[l]} y="40" textAnchor="middle" fontSize="17" fontWeight="600">
+            {laneNames[l]}
+          </text>
+        </g>
+      ))}
+    </>
+  );
+}
+
+function Msg({ from, to, y, label, dash = false }: { from: Lane; to: Lane; y: number; label: string; dash?: boolean }) {
+  const a = lanes[from];
+  const b = lanes[to];
+  const dir = Math.sign(b - a);
+  return (
+    <g>
+      <Arrow d={`M ${a + dir * 4} ${y} L ${b - dir * 8} ${y}`} dash={dash} />
+      <text x={(a + b) / 2} y={y - 9} textAnchor="middle" fontSize="15">
+        {label}
+      </text>
+    </g>
+  );
+}
+
+function PaywallBefore() {
+  return (
+    <Frame>
+      <rect x="20" y="120" width="610" height="98" rx="14" fill="var(--color-sand-300)" opacity="0.6" />
+      <text x="626" y="212" textAnchor="end" fontSize="14" fontWeight="600">race</text>
+      <Lanes fill="var(--color-sand-50)" />
+      <Msg from="browser" to="stripe" y={96} label="pay as a guest" />
+      <Msg from="stripe" to="webhook" y={146} label="paid" />
+      <Msg from="webhook" to="db" y={146} label="token" />
+      <Msg from="browser" to="app" y={196} label="poll, up to 15s" dash />
+      <Msg from="app" to="db" y={196} label="token yet?" dash />
+      <rect x="14" y="230" width="100" height="30" rx="8" fill="var(--color-sand-50)" stroke="currentColor" strokeWidth="2" />
+      <text x="64" y="250" textAnchor="middle" fontSize="13">token on device</text>
+      <Msg from="browser" to="app" y={292} label="claim" dash />
+      <Msg from="browser" to="app" y={326} label="restore" dash />
+    </Frame>
+  );
+}
+
+function PaywallAfter() {
+  return (
+    <Frame>
+      <Lanes fill="var(--color-sky-100)" />
+      <Msg from="browser" to="app" y={96} label="email + code" />
+      <Msg from="app" to="db" y={132} label="create account" />
+      <Msg from="browser" to="stripe" y={178} label="pay, with user ID" />
+      <Msg from="stripe" to="webhook" y={218} label="paid" />
+      <Msg from="webhook" to="db" y={258} label="subscription" />
+      <Msg from="app" to="db" y={310} label="has access? one query" />
+    </Frame>
+  );
+}
+
 export const diagrams = {
+  "paywall-before": PaywallBefore,
+  "paywall-after": PaywallAfter,
   "deimr-before": DeimrBefore,
   "deimr-after": DeimrAfter,
   "docs-said": DocsSaid,
