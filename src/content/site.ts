@@ -172,8 +172,6 @@ export const contact = {
 export const stove = [
   { title: "The curse of taste and competence", tag: "Craft" },
   { title: "The importance of competence as a leader", tag: "Leadership" },
-  // A reminder to myself, as someone who likes to overplan, overthink and keep everything
-  // structured and in control: you don't get clarity from planning, you get it from acting.
   { title: "Action precedes clarity", tag: "Mindset" },
 ] as const;
 
