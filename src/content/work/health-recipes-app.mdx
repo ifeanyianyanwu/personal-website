@@ -1,10 +1,121 @@
 export const meta = {
-  title: "Health & recipes app",
+  title: "Wellness recipe app",
   year: 2026,
   order: 1,
-  summary: "AI recipes matched to health goals. Freelance, under NDA.",
-  tags: ["Freelance", "AI", "Health"],
+  summary: "Mobile wellness PWA with recipe-scoped AI chat, a Stripe paywall and risk tools. Client work, under NDA.",
+  tags: ["Next.js", "Supabase + pgvector", "Vercel AI SDK", "Stripe", "PWA"],
   kinds: ["AI & ML"],
-  status: "nda",
-  result: "Under NDA, so no screens here",
+  status: "case-study",
+  result: "Solo v1 in ten weeks",
+  when: "Mar to Jun 2026",
+  headline: { lead: "Wellness answers that", accent: "stay on topic." },
+  lede: "A health-tech client wanted a mobile wellness app but had only a rough idea and a partial design. I shaped the features with them and built the first version on my own: AI chat scoped to each recipe, a Stripe paywall tied to real accounts, and an installable PWA. Then I handed it to the team that carried it forward.",
+  teaser: "How I rebuilt a paywall three times until payment and identity lined up.",
 };
+
+<Recipe
+  serves="A health-tech client with a clinical background, building a mobile app of healthy recipes and wellness guides for everyday users. Client work under NDA: the client, product name and screens are left out"
+  prep="Mar to Jun 2026 · about 10 weeks solo, then handover to a two-person team"
+  role="Sole engineer and product consultant for v1. I owned the architecture and most feature decisions, built the app end to end, and onboarded the developers who took over"
+  ingredients="Next.js 16, React 19, TypeScript, Tailwind, Radix, Supabase (Auth, Postgres, pgvector), Vercel AI SDK with Gemini embeddings and Claude, Stripe embedded checkout and webhooks, Serwist, Cloudinary, Vercel"
+>
+  <BigResult value="3 tries" note="until the paywall knew who paid" />
+</Recipe>
+
+<Chapter n="01" title={<>The brief was <em>a sketch.</em></>}>
+
+The client knew who the app was for. Most of what it should do was still open. They asked for one firm thing: a mobile-only app. Beyond that they had a general idea and an incomplete design. So a good part of my job was product work. I proposed features, talked them through with the client, and filled the gaps in the design as I built.
+
+I started from a generated UI scaffold and turned it into an installable PWA on day one, with a manifest, icons and a service worker. The service worker has firm rules about what it must never cache. Payment requests, auth and database calls, and the app's own API routes always go to the network. Static assets use normal caching. I also turned off the automatic reload when the device comes back online, because it would wipe any form the user was halfway through.
+
+Mobile-only had to be real, not a hope. Desktop visitors get a QR code that opens the app on their phone, and phone users get an install prompt written for iOS and Android separately.
+
+</Chapter>
+
+<Chapter n="02" title={<>Chat that knows <em>which recipe you're on.</em></>}>
+
+Readers had follow-up questions, and a general chatbot answers them with no idea what page you're looking at. So every recipe and guide has a short chat underneath it. The goal was answers grounded in *that* recipe, with a careful fallback when the recipe's own material doesn't cover the question.
+
+I kept vectors in Supabase with pgvector, not a separate vector database. The app's data already lived in Supabase, so the embeddings sit next to the recipes they describe and there's one less vendor to run. I still put the store behind a small interface, with a Pinecone version written and ready to switch on in one line.
+
+For models, I developed against Gemini's free tier and ran live answers on a paid Claude plan. Both go through the Vercel AI SDK, so moving a route from one provider to the other was a one-line change. Embeddings stayed on Gemini.
+
+<Steps>
+  <Step title="Chunk the sources">Recipe source text is split into roughly 600-character chunks with some overlap, breaking at sentence boundaries where possible. Fragments too short to be useful are dropped.</Step>
+  <Step title="Embed, and resume after a failure">Chunks are embedded in batches, each with an ID built from its content, so re-running the job never duplicates anything. A state file lets the job pick up where it stopped after a quota limit.</Step>
+  <Step title="Tag each chunk with its recipe">Every vector carries the ID of the recipe or guide it came from.</Step>
+  <Step title="Search only this recipe">A question is embedded and matched only against chunks from the page the user is on, keeping the top few above a similarity threshold.</Step>
+  <Step title="Answer from the context, or fall back">If good chunks come back, the model answers from them and cites the sources. If not, it can search the web, but only trusted health sources. Either way the prompt forbids made-up statistics and clinical claims.</Step>
+  <Step title="Generate suggested questions once">Each page shows a few suggested questions. They're generated on the first visit and saved, so later visitors don't trigger a model call.</Step>
+</Steps>
+
+</Chapter>
+
+<Chapter n="03" title={<>Getting paid without losing track of <em>who paid.</em></>}>
+
+The hardest part. In one week I rebuilt the paywall's idea of "who has access" three times.
+
+My first design let people pay as guests. Stripe's webhook created an access token, the return page swapped the checkout session for that token, and the token lived in the browser. It worked in the happy path, and each edge case added another patch. The webhook and the return page raced each other, so the return page polled for up to 15 seconds. Tokens weren't linked to accounts, so I added an endpoint to claim them when someone signed in with the same email. Clearing the browser or switching phones lost access, so I built a restore-by-email flow with rate limiting.
+
+Meanwhile I moved checkout out of a modal and onto its own page. A payment form squeezed into a dialog felt cramped on a phone, and a full page was simply a better experience.
+
+Then I stepped back. Every patch existed because payment came before identity. So I turned it round. Guests now enter their email and confirm a one-time code first, which creates a real account. Only then does Stripe load, with that account's ID attached to the session. The webhook writes a subscription row for that user, and "do they have access?" becomes a single query. People who sign in with Google or only ever paid can log in with a one-time code, and a nightly job removes accounts that started checkout but never confirmed. The rewrite deleted the restore flow and the token endpoints outright.
+
+</Chapter>
+
+<Chapter n="04" title={<>Pay first, or <em>account first.</em></>} intro="Drag, or scroll, to compare the first paywall with the last. Sequence diagrams drawn for this page, not screenshots." wide>
+  <Compare
+    label="Compare the paywall's access model before and after the rebuild"
+    before={{ label: "Before · a token in the browser", note: "Poll, claim, restore", diagram: "paywall-before" }}
+    after={{ label: "After · account first, then pay", note: "One lookup, any device", diagram: "paywall-after" }}
+  />
+</Chapter>
+
+<Chapter n="05" title={<>Risk tools built to <em>a clinical spec.</em></>}>
+
+The client asked for two screening tools based on published models. I built a breast cancer risk checker on the Gail model and a prostate cancer risk checker on the PCPT Risk Calculator 2.0.
+
+The Gail model needs separate risk tables and baseline rates for different populations. The PCPT calculator gives low-grade and high-grade risk separately from published coefficients, and I kept the citation next to the coefficients in the code. The client, who had a clinical background, set the requirements. The team removed both tools from the product after I left.
+
+</Chapter>
+
+<Chapter n="06" title={<>Handing it <em>over.</em></>}>
+
+Other engagements pulled me away, so the last job was making sure someone else could carry it on. My final weeks were polish and cost work: optimised images through a CDN, a trending-recipes section, link previews for sharing, and a rewritten assistant prompt.
+
+Then I added a setup template for environment variables and walked two developers through the codebase. They were committing the same day and went on to build a much larger product on that base. Months later, the chat, the service worker, the mobile gate, the install prompt and the core of the Stripe webhook were all still running.
+
+I'm open about how this was built. The starting UI came from a generator, and I used AI coding tools for about 70% of the code. My part was deciding what to build with the client, designing how the pieces fit, and debugging them when they didn't, as the paywall story shows.
+
+<Blend
+  caption="Where my code went · lines added, by area"
+  parts={[
+    { label: "UI and pages", value: 39, note: "Home, recipes, guides, bookmarks, notifications, profile" },
+    { label: "Auth, payments and access", value: 29, note: "Including all three versions of the paywall" },
+    { label: "Risk tools", value: 15, note: "Two models plus their input forms" },
+    { label: "AI chat", value: 11, note: "Retrieval, chat routes, suggested questions" },
+    { label: "PWA and platform", value: 6, note: "Service worker, manifest, mobile gate, config" },
+  ]}
+/>
+
+</Chapter>
+
+<Chapter n="07" title="The build.">
+
+The app hadn't launched when I handed it over, so there are no usage numbers here. These are delivery facts.
+
+<Results>
+  <Stat value="~10">weeks from an empty repo to a working v1, as the only engineer</Stat>
+  <Stat value="39">pull requests merged before the team joined</Stat>
+  <Stat value="5">core pieces still running after the team's next three months of work</Stat>
+</Results>
+
+</Chapter>
+
+<Chapter n="08" title={<>What I'd do <em>differently.</em></>}>
+
+I'd pin down scope and design much earlier. With a vague brief I built first and settled things later, and the history shows the cost. The access model was rebuilt three times in a week, a content pipeline was added and pulled out within eight days, and the paywall boundary moved after the screens around it were done. A short round of agreeing flows with the client before building would have saved most of that.
+
+I'd also start with identity before payment, write tests from the first week, and leave a written architecture note with the next team, not just a walkthrough.
+
+</Chapter>
