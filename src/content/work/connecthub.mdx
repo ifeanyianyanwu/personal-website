@@ -1,54 +1,118 @@
 export const meta = {
   title: "ConnectHub",
-  year: 2025,
-  order: 3,
-  summary: "Hobby-based social network with AI matching. My final-year project.",
-  tags: ["AI", "PWA", "Supabase"],
-  kinds: ["AI & ML"],
+  year: 2026,
+  order: 0,
+  summary: "Social PWA that matches people and communities by hobbies using AI embeddings",
+  tags: ["Next.js 16", "Supabase", "Gemini embeddings", "PWA / Web Push", "TypeScript"],
+  kinds: ["Side projects", "AI & ML"],
   status: "case-study",
-  result: "60/40 blend of Jaccard similarity and Gemini embeddings",
-  when: "Oct 2025 to Apr 2026",
-  headline: { lead: "Interests over", accent: "identity." },
-  lede: "My final-year project: a social network that matches people and communities on what they love, and asks whether that beats platforms built around who you already know.",
-  teaser: "Matching people on what they love, with a 60/40 blend of Jaccard similarity and Gemini embeddings.",
+  result: "Messages delivered in under 1s",
+  when: "Oct 2025 to May 2026",
+  headline: { lead: "Friends found by", accent: "what you love." },
+  lede: "Finding people who share a niche hobby is hard on platforms built around follower counts, and there's no clear path from \"I enjoy this\" to \"I'd like to talk to someone else who does\". For my final-year project I designed and built ConnectHub alone: a social PWA that recommends people and communities by blending exact hobby overlap with Gemini embedding similarity, with realtime messaging and push notifications.",
+  teaser: "How one auth call kept logging people out of an installed PWA.",
 };
 
 <Recipe
-  serves="People looking for others who share their hobbies, or the ones next door"
-  prep="Oct 2025 to Apr 2026 · final-year project"
-  ingredients="Next.js, Supabase, Gemini embeddings, Jaccard similarity, PWA"
+  serves="People with niche hobbies who want one-to-one connections and small communities. A university project, tested with five people on seeded data; nobody outside the course used it"
+  prep="Oct 2025 to May 2026 · research and design first, then about 15 weeks of build from January: 66 commits over 22 working days, solo"
+  role="Sole engineer and designer: research, wireframes, data model, auth, realtime, PWA and push, AI matching, admin tools, testing and deployment. The first UI pass came from v0; everything behind it I built"
+  ingredients="Next.js 16 (App Router, Server Actions), React 19, TypeScript, Tailwind 4 + shadcn/ui, Supabase (Postgres, Auth, Realtime, Storage, RLS), Gemini embeddings, Serwist, Web Push, Vercel"
 >
-  <Blend parts={[{ label: "Jaccard similarity", value: 60, note: "hobbies you share" }, { label: "Gemini embeddings", value: 40, note: "hobbies close in meaning" }]} />
+  <BigResult value="<1s" note="message delivery, measured in my own testing" />
 </Recipe>
 
-<Chapter n="01" title="The question.">
+<Chapter n="01" title={<>A social app with <em>one job.</em></>}>
 
-Most social apps start with people you already know. ConnectHub starts with what you love: you tell it your hobbies, and it finds people and communities around them.
+Most social apps rank by attention. I wanted one that ranks by shared interest. Follower-based networks push people towards comparing themselves with others, and Meetup charges organisers and does little for one-to-one discovery, with no real-time chat. The research question was whether content-based matching with AI embeddings could give useful recommendations to people who had only just signed up.
 
-The research question was simple to say and hard to answer: does interest-based AI matching beat people-based platforms?
+I picked Next.js for server rendering, routing and PWA support, and Supabase over Firebase for full SQL, no lock-in and cost. I built a PWA, not a native app, so one codebase reached every phone without app store releases. It's still running: you can [try it live](https://connecthub-nu.vercel.app) or [read the code](https://github.com/ifeanyianyanwu/connecthub).
+
+<Steps>
+  <Step title="Wireframes, then a clickable prototype">I wireframed ten screens, generated a first UI pass in v0, and ran it on mock data so I could test the flows before any backend existed.</Step>
+  <Step title="Real auth">Supabase sign-up, email codes, password reset and onboarding.</Step>
+  <Step title="One feature at a time onto Postgres">Profiles, discover, connections, communities and posts, each in its own pull request.</Step>
+  <Step title="Delete the scaffolding">Removed the mock store and fake auth, about 1,070 lines.</Step>
+  <Step title="Make it an app">Service worker, manifest and Web Push.</Step>
+</Steps>
 
 </Chapter>
 
-<Chapter n="02" title="The hard part.">
+<Chapter n="02" title={<>Matching on meaning, <em>not just tags.</em></>}>
 
-Recommending two things at once: people, and communities. Make the matching too literal and you only meet people with your exact hobbies. Make it too loose and the matches stop making sense.
+Exact tags miss near neighbours. Someone into bouldering and someone into climbing share nothing on paper. So each user's hobbies become a Gemini embedding stored on their profile, refreshed whenever the hobbies change. Communities get one too, built from their hobbies, category, name and description, in that order of weight.
 
-I was looking for the sweet spot in between, where you find people like you, but also the hobby next to yours and the communities next to the ones you already follow.
+Two Postgres functions do the ranking. For people, one blends Jaccard similarity on shared hobbies with the cosine similarity of the embeddings. For communities, the other blends exact hobby overlap with the same embedding similarity. Both use a 60/40 split, and both skip people I'm already connected to and communities I've already joined.
+
+Exact overlap keeps the bigger share because the app can explain it: "you both like X". The embeddings fill in the related interests that use different words.
+
+<Blend
+  parts={[
+    { label: "Shared hobbies", value: 60, note: "Exact overlap (Jaccard for people). Shown to the user as the reason for the match" },
+    { label: "Gemini embeddings", value: 40, note: "Cosine similarity. Catches related interests named differently" },
+  ]}
+/>
+
+Embeddings weren't in the original plan, and they're the main reason the build overran. Looking back, they should have been a stretch goal. They're also the part I'm proudest of.
 
 </Chapter>
 
-<Chapter n="03" title="The blend.">
-  <Steps>
-    <Step title="Jaccard similarity, 60%">Compares hobby lists directly. The more hobbies two people share, the higher the score. It keeps every match grounded in something you can see.</Step>
-    <Step title="Gemini embeddings, 40%">Compares what hobbies mean, not just their names, so hobbies that sit close together still find each other. This is where discovery comes from.</Step>
-    <Step title="Tuned for both">The same balance has to work for people and for communities, so I tuned it against both instead of one.</Step>
-  </Steps>
+<Chapter n="03" title={<>The app that kept <em>logging people out.</em></>}>
+
+After the PWA shipped, everything passed in the desktop browser. The bug only showed up when I installed it on my phone: close the app, open it again, and I was back on the login page. Every time.
+
+Desktop testing never closed the app the way a phone does, so it could never have caught this. The proxy that guards each page was checking the session with `getClaims()`, which verifies the token locally and never refreshes it, and the session cookie had the default lifetime. Reopening the app after a while meant an expired token, nothing to refresh it, and a redirect to login.
+
+The fix was one call and one setting. The proxy now uses `getUser()`, which asks Supabase and refreshes the session through the cookie, and the cookie lasts 400 days (same-site, secure in production). After that, the reliability check "sessions persist without re-login" passed.
+
+The service worker needed the same care. Calls to Supabase and to my own API routes always go to the network, because auth and data must never be stale. I also turned off the automatic reload when the phone comes back online, because it would wipe a half-written post.
+
 </Chapter>
 
-<Chapter n="04" title="What I'd keep.">
+<Chapter n="04" title={<>Signed out, or <em>still signed in.</em></>} intro="Drag, or scroll, to compare reopening the installed app before and after the fix. Sequence diagrams drawn for this page, not screenshots." wide>
+  <Compare
+    label="Compare reopening the installed app before and after the session fix"
+    before={{ label: "Before · checked locally", note: "Logged out on reopen", diagram: "session-before" }}
+    after={{ label: "After · refreshed by Supabase", note: "Stays signed in", diagram: "session-after" }}
+  />
+</Chapter>
 
-The decision I'd defend: the 60/40 blend. Shared hobbies lead, so a match always has a reason you can point to, and the embeddings widen the circle without taking it over.
+<Chapter n="05" title={<>Live, <em>without polling.</em></>}>
 
-Documentation has to match the code. On a research project the write-up is part of the product, so every claim in it has to hold up against what the code actually does.
+Likes, comments, messages and notifications appear for everyone viewing, without a refresh. Five screens subscribe to Supabase Realtime: messages, connections, post cards, the notification panel and the unread badge. Post cards update likes straight away and keep the count live for every viewer.
+
+Notifications started as Postgres triggers that inserted a row. I moved them into the app so one call could do two things: write the in-app notification, then send a Web Push to each of the recipient's devices, clearing out subscriptions that no longer exist. A trigger can't send push on its own.
+
+In testing, messages arrived in under a second and push notifications in under two. One limit I couldn't design around: iOS only delivers Web Push once the app is added to the home screen.
+
+</Chapter>
+
+<Chapter n="06" title={<>It passed its tests. <em>Then I reviewed it.</em></>}>
+
+Every functional requirement had its own test case, run on a preview deployment in Chrome and iOS Safari, and all 24 passed. I also tried cross-user queries from the browser console (blocked by row-level security) and script injection in posts (escaped). Five people worked through set tasks, and all of them finished every task. What tripped them up: no way to withdraw a connection request (two sent one by mistake), an unlabelled filter icon, no upload progress, and vague error messages.
+
+Months after I handed it in, I reviewed the code again and found holes the tests never looked for. The notification actions trusted the IDs the browser sent, so anyone could fake who a notification came from. The email confirmation route would redirect to another site. And an unused accept action let any user accept any connection request.
+
+The lesson: row-level security protected the tables, but server actions are public endpoints too. They have to work out who's calling from the session, never from their arguments. Each action now takes only the ID of the like, comment or connection, checks it belongs to the signed-in user, and works out the recipient on the server. While I was there I brought the README back in line with the code, a habit I wrote about in [Docs must match the code](/journal/docs-must-match-the-code).
+
+</Chapter>
+
+<Chapter n="07" title="The numbers.">
+
+ConnectHub had no users outside the course, so these are results from my own evaluation, not production metrics.
+
+<Results>
+  <Stat value="24/24">functional requirements passing their test cases</Stat>
+  <Stat value="<1s">message delivery in realtime, with push under 2s</Stat>
+  <Stat value="100%">task completion across five usability sessions</Stat>
+</Results>
+
+</Chapter>
+
+<Chapter n="08" title={<>What I'd do <em>differently.</em></>}>
+
+I'd make the AI matching a stretch goal, not a core deliverable, and get it working on exact overlap first. I'd recruit testers early enough for more than one round, and I'd add automated tests, CI, and versioned SQL and security policies from the start, so the database lived in the repo and not only in Supabase.
+
+Scope discipline mattered too. I built account deletion late in the project, then reverted it the same day because the report had put data export and deletion out of scope. It's first on the list for what comes next, for GDPR. After that: a third signal from collaborative filtering, blocking, and editing posts.
 
 </Chapter>
