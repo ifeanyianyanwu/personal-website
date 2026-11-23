@@ -54,7 +54,7 @@ The organisers expected AI tools, and I used two. v0 drafted the first pass of t
 
 OAuth 1.0a with RSA-SHA256 signatures, a .p12 keystore, and documentation that was out of date.
 
-The tap-to-pay guide no longer matched the API. The parts of one feature were spread across pages that linked to more pages, and none of them told the whole story. I pieced them together into what I actually needed.
+The donation guide no longer matched the API. The parts of one feature were spread across pages that linked to more pages, and none of them told the whole story. I pieced them together into what I actually needed.
 
 The signing key was its own small fight. Mastercard gives you a .p12 file, so I stored it base64-encoded and parsed it at runtime. By the end, the loader stripped stray whitespace, retried with an empty password, and searched three different places in the file for the private key. Every request carries a SHA-256 hash of its body and an RSA-SHA256 signature over the whole thing. The kind of problem that doesn't care how tired you are.
 
