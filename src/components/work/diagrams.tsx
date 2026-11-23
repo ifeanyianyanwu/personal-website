@@ -74,58 +74,103 @@ function DeimrAfter() {
   );
 }
 
+/**
+ * The Mastercard Donate docs, mapped from developer.mastercard.com (Nov 2026):
+ * the guest donation guide reads as the whole story, but one signed, encrypted
+ * call also needs the pages it never links to, and the pages those send you to.
+ */
 function DocsSaid() {
   return (
     <Frame>
-      <rect x="30" y="30" width="220" height="280" rx="16" fill="var(--color-sand-50)" stroke="currentColor" strokeWidth="3" />
-      <text x="140" y="72" textAnchor="middle" fontWeight="600">Tap to pay guide</text>
-      {[104, 134, 164, 194, 224, 254].map((y, i) => (
-        <path key={y} d={`M 56 ${y} L ${i % 2 ? 196 : 224} ${y}`} {...thin} strokeLinecap="round" />
-      ))}
-      <Arrow d="M 262 170 L 390 170" />
-      <text x="326" y="152" textAnchor="middle" fontSize="17">follow the steps</text>
-      <rect x="400" y="120" width="210" height="100" rx="18" {...box} />
-      <text x="505" y="166" textAnchor="middle">Payments</text>
-      <text x="505" y="190" textAnchor="middle">just work</text>
+      <rect x="30" y="20" width="250" height="300" rx="16" fill="var(--color-sand-50)" stroke="currentColor" strokeWidth="3" />
+      <text x="155" y="60" textAnchor="middle" fontSize="18" fontWeight="600">Make a Guest Donation</text>
+      <text x="155" y="84" textAnchor="middle" fontSize="14">use case guide</text>
+      {[1, 2, 3, 4, 5].map((n, i) => {
+        const y = 118 + i * 34;
+        return (
+          <g key={n}>
+            <circle cx="64" cy={y} r="11" {...thin} />
+            <text x="64" y={y + 5} textAnchor="middle" fontSize="13">{n}</text>
+            <path d={`M 88 ${y} L ${i % 2 ? 214 : 246} ${y}`} {...thin} strokeLinecap="round" />
+          </g>
+        );
+      })}
+      <text x="155" y="300" textAnchor="middle" fontSize="15">… to step 22</text>
+      <Arrow d="M 292 170 L 390 170" />
+      <text x="341" y="152" textAnchor="middle" fontSize="15">follow along</text>
+      <rect x="400" y="110" width="210" height="120" rx="18" {...box} />
+      <text x="505" y="162" textAnchor="middle">One call</text>
+      <text x="505" y="192" textAnchor="middle" fontSize="15">POST /guest-payments</text>
     </Frame>
   );
 }
 
+type DocPage = { y: number; t: string };
+
+function DocCard({ x, w, y, t, outside = false }: DocPage & { x: number; w: number; outside?: boolean }) {
+  return (
+    <g>
+      <rect
+        x={x}
+        y={y}
+        width={w}
+        height="48"
+        rx="10"
+        fill={outside ? "var(--color-sand-50)" : "var(--color-sky-100)"}
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeDasharray={outside ? "5 5" : undefined}
+      />
+      <text x={x + w / 2} y={y + 30} textAnchor="middle" fontSize="15">{t}</text>
+    </g>
+  );
+}
+
 function DocsTook() {
-  const pages = [
-    { x: 14, y: 24, t: "Guide" },
-    { x: 138, y: 24, t: "Linked page" },
-    { x: 14, y: 190, t: "Linked page" },
-    { x: 138, y: 190, t: "Linked page" },
+  // Left: the Donate docs. Right: the pages they send you to, off the Donate docs.
+  const donate: DocPage[] = [
+    { y: 30, t: "Guest donation" },
+    { y: 90, t: "Parameters" },
+    { y: 150, t: "API basics" },
+    { y: 210, t: "Quick start" },
+    { y: 270, t: "Codes and formats" },
   ];
+  const elsewhere: DocPage[] = [
+    { y: 30, t: "OAuth 1.0a guide" },
+    { y: 90, t: "Body hash draft" },
+    { y: 190, t: "Encryption guide" },
+    { y: 270, t: "Gateway errors" },
+  ];
+  const mid = (y: number) => y + 24;
   return (
     <Frame>
-      {pages.map((p, i) => (
-        <g key={i}>
-          <rect x={p.x} y={p.y} width="110" height="126" rx="12" fill="var(--color-sky-100)" stroke="currentColor" strokeWidth="2" />
-          <text x={p.x + 55} y={p.y + 30} textAnchor="middle" fontSize="16">{p.t}</text>
-          <path d={`M ${p.x + 16} ${p.y + 56} L ${p.x + 94} ${p.y + 56} M ${p.x + 16} ${p.y + 80} L ${p.x + 78} ${p.y + 80}`} {...thin} strokeLinecap="round" />
-        </g>
+      <text x="30" y="18" fontSize="13" fontWeight="600" letterSpacing="1">DONATE DOCS</text>
+      <text x="252" y="18" fontSize="13" fontWeight="600" letterSpacing="1">LINKED FROM THEM</text>
+      {donate.map((p) => (
+        <DocCard key={p.t} x={30} w={160} {...p} />
       ))}
-      <Arrow d="M 124 86 L 136 86" />
-      <Arrow d="M 193 152 L 193 186" />
-      <Arrow d="M 136 252 L 126 252" />
-      <Arrow d="M 69 186 L 69 154" dash />
-      {[
-        { y: 30, t: "OAuth 1.0a" },
-        { y: 140, t: ".p12 keys" },
-        { y: 250, t: "Tap to pay" },
-      ].map((p) => (
-        <g key={p.y}>
-          <rect x="300" y={p.y} width="150" height="60" rx="14" {...box} />
-          <text x="375" y={p.y + 36} textAnchor="middle">{p.t}</text>
-          <Arrow d={`M 456 ${p.y + 30} C 480 ${p.y + 30}, 480 170, 500 170`} />
-        </g>
+      {elsewhere.map((p) => (
+        <DocCard key={p.t} x={252} w={180} outside {...p} />
       ))}
-      <Arrow d="M 254 170 L 292 170" dash />
-      <rect x="506" y="126" width="128" height="88" rx="18" />
-      <text x="570" y="164" textAnchor="middle" fill="var(--color-sand-100)">Sandbox</text>
-      <text x="570" y="188" textAnchor="middle" fill="var(--color-sand-100)">works</text>
+
+      {/* links between pages */}
+      <Arrow d="M 30 54 C 6 54, 6 114, 22 114" />
+      <Arrow d="M 192 166 C 220 166, 220 54, 246 54" />
+      <Arrow d="M 192 174 C 222 174, 222 114, 246 114" />
+      <Arrow d="M 192 182 C 222 182, 222 214, 246 214" />
+      <Arrow d="M 192 234 C 222 234, 222 222, 246 222" />
+      <Arrow d="M 192 294 L 246 294" />
+
+      {/* every page feeds the one call */}
+      <path d="M 466 54 L 466 294" {...thin} />
+      {elsewhere.map((p) => (
+        <path key={p.t} d={`M 432 ${mid(p.y)} L 466 ${mid(p.y)}`} {...thin} />
+      ))}
+      <Arrow d="M 466 170 L 494 170" />
+      <rect x="502" y="112" width="132" height="116" rx="18" />
+      <text x="568" y="152" textAnchor="middle" fontSize="17" fill="var(--color-sand-100)">One signed,</text>
+      <text x="568" y="176" textAnchor="middle" fontSize="17" fill="var(--color-sand-100)">encrypted</text>
+      <text x="568" y="200" textAnchor="middle" fontSize="17" fill="var(--color-sand-100)">call</text>
     </Frame>
   );
 }
