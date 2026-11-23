@@ -4,6 +4,10 @@ import createMDX from "@next/mdx";
 const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
+  experimental: {
+    // Only nudge coding agents about security upgrades, not every new release.
+    agentUpgrade: "security",
+  },
   pageExtensions: ["ts", "tsx", "mdx"],
   turbopack: {
     rules: {
