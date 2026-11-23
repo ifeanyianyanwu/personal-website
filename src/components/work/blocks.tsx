@@ -128,31 +128,57 @@ export function Results({ children }: { children: React.ReactNode }) {
 
 export function Stat({ value, children }: { value: string; children: React.ReactNode }) {
   return (
-    <div className="flex flex-col-reverse pt-7">
+    <div className="flex flex-col-reverse justify-end pt-7">
       <dt className="mt-2.5 text-muted">{children}</dt>
       <dd className="font-serif text-[clamp(3rem,4.4vw,4.25rem)] leading-[0.9] text-accent">{value}</dd>
     </div>
   );
 }
 
-/** A weighted mix, e.g. a matching formula. Values should add up to 100. */
-export function Blend({ parts }: { parts: { label: string; value: number; note: string }[] }) {
-  const tones = ["bg-sky-900 text-sand-100", "bg-sky-500 text-sky-900"];
+/**
+ * A weighted mix, e.g. a matching formula or where the code went. Values should add
+ * up to 100. Slices too narrow for their number show it in the legend instead.
+ */
+export function Blend({
+  parts,
+  caption = "Match score",
+}: {
+  parts: { label: string; value: number; note: string }[];
+  caption?: string;
+}) {
+  const tones = [
+    "bg-sky-900 text-sand-100",
+    "bg-sky-500 text-sky-900",
+    "bg-sky-700 text-sand-100",
+    "bg-sky-300 text-sky-900",
+    "bg-sand-300 text-ink",
+  ];
+  const fits = (value: number) => value >= 12;
+  // Two parts read by order; more need a colour key.
+  const keyed = parts.length > 2;
   return (
     <figure className="flex flex-col gap-4 rounded-[1.625rem] bg-sand-50 px-6 py-6 text-ink">
-      <figcaption className="text-eyebrow text-ink-soft">Match score</figcaption>
+      <figcaption className="text-eyebrow text-ink-soft">{caption}</figcaption>
       <div className="flex h-16 overflow-hidden rounded-xl">
         {parts.map((p, i) => (
-          <div key={p.label} className={`flex items-center px-4 font-serif text-[1.75rem] ${tones[i % 2]}`} style={{ width: `${p.value}%` }}>
-            {p.value}
+          <div
+            key={p.label}
+            className={`flex items-center overflow-hidden px-4 font-serif text-[1.75rem] ${tones[i % tones.length]}`}
+            style={{ width: `${p.value}%` }}
+          >
+            {fits(p.value) && p.value}
           </div>
         ))}
       </div>
-      <dl className="grid grid-cols-2 gap-4 text-sm">
-        {parts.map((p) => (
+      <dl className={`grid gap-4 text-sm ${keyed ? "sm:grid-cols-2" : "grid-cols-2"}`}>
+        {parts.map((p, i) => (
           <div key={p.label}>
-            <dt className="font-medium">{p.label}</dt>
-            <dd className="text-ink-soft">{p.note}</dd>
+            <dt className="font-medium">
+              {keyed && <span aria-hidden className={`mr-2 inline-block size-3 rounded-full align-[-1px] ${tones[i % tones.length]}`} />}
+              {p.label}
+              {!fits(p.value) && ` · ${p.value}`}
+            </dt>
+            <dd className={`text-ink-soft ${keyed ? "pl-5" : ""}`}>{p.note}</dd>
           </div>
         ))}
       </dl>
