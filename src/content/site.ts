@@ -170,10 +170,8 @@ export const contact = {
 
 /** Journal drafts in progress ("On the stove"). Listed on /journal, not linked. Remove one when its post ships. */
 export const stove = [
-  { title: "One day, one hackathon, one API", tag: "Hackathons" },
-  { title: "Small beats perfect", tag: "Craft" },
-  { title: "Why interest beats identity in networking", tag: "Research" },
-  { title: "From microbiology to software", tag: "Career" },
+  { title: "The curse of taste and competence", tag: "Craft" },
+  { title: "The importance of competence as a leader", tag: "Leadership" },
 ] as const;
 
 /** /about. Roles, titles and dates come from the CV; story from the profile. */
