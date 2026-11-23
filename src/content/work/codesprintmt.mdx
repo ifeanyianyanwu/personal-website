@@ -2,7 +2,8 @@ export const meta = {
   title: "CodeSprintMT",
   year: 2026,
   order: 3,
-  summary: "Contactless charity donations for the Mastercard Donate API, solo in one day.",
+  summary:
+    "Contactless charity donations for the Mastercard Donate API, solo in one day.",
   tags: ["Next.js", "Supabase", "Mastercard Donate API", "OAuth 1.0a"],
   kinds: ["Hackathons"],
   status: "case-study",
@@ -10,7 +11,8 @@ export const meta = {
   when: "July 2026 · one day",
   headline: { lead: "One day. One API.", accent: "Top 10." },
   lede: "A solo, day-long build of a contactless charity donation platform at CodeSprintMT 2026, from the donor app to a signed Mastercard Donate integration. It made the Top 10 finalists in the Open Category.",
-  teaser: "A solo, day-long build against the Mastercard Donate API. Top 10 in the Open Category.",
+  teaser:
+    "A solo, day-long build against the Mastercard Donate API. Top 10 in the Open Category.",
 };
 
 <Recipe
@@ -42,11 +44,28 @@ The organisers expected AI tools, and I used two. v0 drafted the first pass of t
 
 </Chapter>
 
-<Chapter n="03" title={<>Docs versus <em>reality.</em></>} intro="Then came the Mastercard integration, and the day got interesting. Drag, or scroll, to compare. A diagram drawn for this page." wide>
+<Chapter
+  n="03"
+  title={
+    <>
+      Docs versus <em>reality.</em>
+    </>
+  }
+  intro="Then came the Mastercard integration, and the day got interesting. Drag, or scroll, to compare. A diagram drawn for this page."
+  wide
+>
   <Compare
     label="Compare what the Mastercard documentation described with what the integration actually took"
-    before={{ label: "What the docs said", note: "One guide", diagram: "docs-said" }}
-    after={{ label: "What it actually took", note: "Nine pages", diagram: "docs-took" }}
+    before={{
+      label: "What the docs said",
+      note: "One guide",
+      diagram: "docs-said",
+    }}
+    after={{
+      label: "What it actually took",
+      note: "Nine pages",
+      diagram: "docs-took",
+    }}
   />
 </Chapter>
 
@@ -66,7 +85,7 @@ Then the Mastercard sandbox went down. The judges told every team that calls wou
 
 By the deadline, 16 of the brief's 20 requirements were fully in place and three more were partly there. Receipts could be downloaded but not emailed, campaigns had no start or end dates, and the dashboard polled every few seconds instead of using websockets. I didn't get to the optional mobile app.
 
-It was enough for the [Top 10 finalists in the Open Category](https://codesprintmalta.edu.mt/code-sprint-2026/). Being shortlisted meant a viva a few days later, where I walked the judges through how my code worked. That's where checking every AI suggestion before keeping it paid off: I could explain any part of it, because I'd read all of it.
+It was enough for the [Top 10 finalists in the Open Category](https://codesprintmalta.edu.mt/code-sprint-2026/). Being shortlisted meant a viva a few days later, where I walked the judges through how my code worked. That's where checking every AI suggestion before keeping it paid off: I could explain any part they asked about.
 
 With a second day, I'd send real email receipts, confirm each transaction with Mastercard on the server before recording it, and put tests around the signing code.
 
