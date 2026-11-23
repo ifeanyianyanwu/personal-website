@@ -16,7 +16,7 @@ export const profile = {
   note: "that's me, probably thinking about the next dish I want to cook",
   signature: "For the plot.",
   email: "anyanwuifeanyi001@gmail.com",
-  portrait: { src: "/images/portrait.jpg", alt: "Portrait of Ifeanyi Anyanwu" },
+  portrait: { src: "/images/portrait-2026-11-full.jpg", alt: "Portrait of Ifeanyi Anyanwu" },
 };
 
 export const links = {
