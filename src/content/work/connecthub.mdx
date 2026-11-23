@@ -7,7 +7,7 @@ export const meta = {
   kinds: ["Side projects", "AI & ML"],
   status: "case-study",
   result: "Messages delivered in under 1s",
-  when: "Aug 2025 to May 2026",
+  when: "Jan to May 2026",
   headline: { lead: "Friends found by", accent: "what you love." },
   lede: "Finding people who share a niche hobby is hard on platforms built around follower counts, and there's no clear path from \"I enjoy this\" to \"I'd like to talk to someone else who does\". For my final-year project I designed and built ConnectHub alone: a social PWA that recommends people and communities by blending exact hobby overlap with Gemini embedding similarity, with realtime messaging and push notifications.",
   teaser: "How one auth call kept logging people out of an installed PWA.",
@@ -15,7 +15,7 @@ export const meta = {
 
 <Recipe
   serves="People with niche hobbies who want one-to-one connections and small communities. A university project, tested with five people on seeded data; nobody outside the course used it"
-  prep="Aug 2025 to May 2026 · a one-day prototype in August 2025, then a fresh build from January to May 2026: 66 commits over 22 days, solo"
+  prep="Jan to May 2026 · 66 commits over 22 days, solo"
   role="Sole engineer and designer: research, wireframes, data model, auth, realtime, PWA and push, AI matching, admin tools, testing and deployment. The first UI pass came from v0; everything behind it I built"
   ingredients="Next.js 16 (App Router, Server Actions), React 19, TypeScript, Tailwind 4 + shadcn/ui, Supabase (Postgres, Auth, Realtime, Storage, RLS), Gemini embeddings, Serwist, Web Push, Vercel"
 >
@@ -29,8 +29,7 @@ Most social apps rank by attention. I wanted one that ranks by shared interest. 
 I picked Next.js for server rendering, routing and PWA support, and Supabase over Firebase for full SQL, no lock-in and cost. I built a PWA, not a native app, so one codebase reached every phone without app store releases. It's still running: you can [try it live](https://connecthub-nu.vercel.app) or [read the code](https://github.com/ifeanyianyanwu/connecthub).
 
 <Steps>
-  <Step title="A one-day prototype">In August 2025 I built a quick version in v0: a social PWA on mock data, then a first pass at Supabase and notifications, all in one day.</Step>
-  <Step title="Wireframes, then a fresh start">I wireframed ten screens, then in January 2026 started a new repo with a first UI pass from v0, and ran it on mock data so I could test the flows before any backend existed.</Step>
+  <Step title="Wireframes, then a clickable prototype">I wireframed ten screens, generated a first UI pass in v0, and ran it on mock data so I could test the flows before any backend existed.</Step>
   <Step title="Real auth">Supabase sign-up, email codes, password reset and onboarding.</Step>
   <Step title="One feature at a time onto Postgres">Profiles, discover, connections, communities and posts, each in its own pull request.</Step>
   <Step title="Delete the scaffolding">Removed the mock store and fake auth, about 1,070 lines.</Step>
