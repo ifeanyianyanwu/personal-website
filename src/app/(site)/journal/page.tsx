@@ -8,7 +8,7 @@ import { getJournal } from "@/lib/journal";
 
 export const metadata: Metadata = {
   title: "Journal",
-  description: "What I learn building things, written down while it's fresh.",
+  description: "Lessons from building and from life, things I notice, and my own thinking, written down while it's fresh.",
   alternates: { types: { "application/rss+xml": "/journal/rss.xml" } },
 };
 
@@ -24,8 +24,8 @@ export default async function Journal() {
           <p className="text-eyebrow text-muted">Journal</p>
           <SplitText as="h1" className="text-display mt-5" text="Notes from" accent="the plot." />
           <p className="text-lede mt-6 max-w-[46ch] text-muted">
-            What I learn building things, written down while it&apos;s fresh. Short, practical, and only claims I can
-            point to.
+            Lessons from building and from life, things I notice, and my own thinking worked through on the page.
+            Written down while it&apos;s fresh.
           </p>
         </div>
         <div className="flex w-full max-w-[22.5rem] flex-col items-start gap-3 md:items-end">

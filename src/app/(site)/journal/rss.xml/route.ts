@@ -28,7 +28,7 @@ ${p.tags.map((t) => `      <category>${escape(t)}</category>`).join("\n")}
     <title>${escape(`Journal · ${profile.name}`)}</title>
     <link>${site}/journal</link>
     <atom:link href="${site}/journal/rss.xml" rel="self" type="application/rss+xml" />
-    <description>What I learn building things, written down while it's fresh.</description>
+    <description>Lessons from building and from life, things I notice, and my own thinking, written down while it's fresh.</description>
     <language>en</language>
 ${items}
   </channel>
