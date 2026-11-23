@@ -2,9 +2,90 @@ export const meta = {
   title: "Screen Guide",
   year: 2025,
   order: 1,
-  summary: "Movie and TV tracking with personal watchlists.",
-  tags: ["Next.js", "Express", "TMDB"],
+  summary: "A movie and TV discovery app with search, trailers and a personal watchlist.",
+  tags: ["Next.js", "Express", "MongoDB", "TMDB"],
   kinds: ["Side projects"],
-  status: "notes",
-  result: "Live",
+  status: "case-study",
+  result: "Solo, from an empty repo to a live client and API",
+  when: "Nov 2024 to Jan 2025",
+  headline: { lead: "Find what to watch,", accent: "then keep it." },
+  lede: "I wanted to keep up with new movies, and to prove I could take a full-stack app from an empty repo to production on my own. Screen Guide is that app: a Next.js client on TMDB for discovery, trailers and where to stream, plus my own Express and MongoDB API for accounts and a watchlist.",
+  teaser: "It compiled fine and crashed on start: what a tsconfig path alias doesn't do.",
 };
+
+<Recipe
+  serves="Me first, keeping up with what's out, then anyone deciding what to watch tonight"
+  prep="Nov 2024 to Jan 2025 · personal project, about 11 weeks part time"
+  role="Sole engineer: client, API, data model, auth and deployment. The UI follows a design file, which I extended for the pages it didn't cover"
+  ingredients="Next.js 14, TypeScript, Tailwind, shadcn/ui, GSAP, Express, MongoDB, Zod, JWT, TMDB API, npm workspaces"
+>
+  <BigResult value="48/48" note="commits mine, from the first scaffold to the deployed API" />
+</Recipe>
+
+<Chapter n="01" title={<>One place to decide <em>what to watch.</em></>}>
+
+The goal was one page that answers three questions: what's out, is it any good, and where can I stream it. TMDB has the catalogue, so the client wraps about 20 of its endpoints: trending, upcoming, details, credits, trailers, reviews, similar titles and watch providers.
+
+The one thing TMDB can't give you is your own list. So I built a small backend for exactly that: email and password accounts, and a watchlist stored on the user. Everything else stays read-only against TMDB.
+
+Next.js route handlers could have stored a watchlist on their own. I built a separate Express API anyway, because owning a real backend, from database to deploy, was part of what I wanted to prove.
+
+</Chapter>
+
+<Chapter n="02" title={<>A client, an API and a <em>shared contract.</em></>}>
+
+I set the repo up as a monorepo with three parts: the Next.js client, the Express server, and a shared package of Zod schemas and types. The idea was that one schema would check a sign-up form in the browser and the same request on the server.
+
+The server signs a JWT when someone signs in. A Next.js server action keeps it in an httpOnly cookie, middleware checks it on every request, and Express checks it again on protected routes. Here is what happens when someone saves a film:
+
+<Steps>
+  <Step title="Click the heart">A form posts to a Next.js server action, and the button shows a spinner while it waits.</Step>
+  <Step title="Read the session">The action reads the httpOnly cookie on the server, so the token never reaches client JavaScript.</Step>
+  <Step title="Call the API">Express checks the token and validates the request body with Zod.</Step>
+  <Step title="Write to Mongo">The title is added to the user's watchlist after a check for duplicates.</Step>
+  <Step title="Revalidate">The watchlist and detail pages are refreshed on the server, so the heart and the list agree without any client state.</Step>
+</Steps>
+
+</Chapter>
+
+<Chapter n="03" title={<>It compiled, then it <em>crashed.</em></>}>
+
+Once the watchlist worked, I got the server ready to host: a build step with the TypeScript compiler, and a start command that runs the compiled JavaScript instead of the TypeScript dev server. The build passed with no errors. Then the server crashed the moment it started: Node couldn't find the shared package.
+
+The cause took four days and 16 commits to pin down. The server imported the Zod schemas from the shared package, and those are real values, not just types. A tsconfig path alias told the type checker where to find them, but the compiler doesn't rewrite import paths. The compiled code still asked Node for the package by name, and the package had never been built: its entry point pointed at a file that didn't exist.
+
+<Steps>
+  <Step title="Point the alias at the source">The type checker was happy. The compiled server still crashed.</Step>
+  <Step title="Make it look like a package">An entry point, a source root and a barrel file. Still no built output for Node to load.</Step>
+  <Step title="Chase the path">The alias moved five more times in an hour, between source and build output and between two relative paths.</Step>
+  <Step title="Fix the manifest">The package listed itself as a dependency, and Zod was only a dev dependency. Both fixed, still a crash.</Step>
+  <Step title="Cut the runtime link">I copied the schemas into the server and dropped the package from its dependencies. It built and it started.</Step>
+</Steps>
+
+Why the last step worked is the lesson I kept. The server's one remaining import from the shared package is a type, and the compiler erases types from its output, so the compiled code no longer needs the package at all. Values live where they run; only types are shared. When I wrote this up, I rebuilt both commits from scratch to check the story: the old one compiles cleanly and crashes on start, and the new one runs.
+
+</Chapter>
+
+<Chapter n="04" title={<>Making navigation feel like <em>a product.</em></>}>
+
+In the last week the work moved from function to feel. Page changes got a GSAP transition: four full-height panels cover the screen, the route changes underneath, then the panels stagger away. When a page renders on the server and can't play the exit itself, a short query parameter tells the client to replay the entrance, and is then removed so it never lands in the history.
+
+Search runs in the browser. The query is debounced, and the search term, media type, filters and page all live in the URL, so a search can be shared and survives a refresh. Skeleton grids hold the layout while results load, and detail pages play trailers inline.
+
+</Chapter>
+
+<Chapter n="05" title="The build.">
+  <Results>
+    <Stat value="11">weeks part time, from the first commit to the last feature</Stat>
+    <Stat value="~20">TMDB endpoints wrapped behind one typed client</Stat>
+    <Stat value="16">commits between a clean build and a server that started</Stat>
+  </Results>
+</Chapter>
+
+<Chapter n="06" title={<>What <em>shipped.</em></>}>
+
+The client runs on Vercel and the API on Render. It has home, movie and TV hubs, detail pages with cast, trailers, reviews, similar titles and where to stream, search, accounts and a watchlist.
+
+To ship, I cut scope on the last day. Password recovery and a few other account features show a "not available yet" message instead of half-working.
+
+</Chapter>
