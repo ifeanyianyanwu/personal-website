@@ -2,9 +2,122 @@ export const meta = {
   title: "Fraud detection",
   year: 2026,
   order: 2,
-  summary: "Decision Tree, Random Forest and XGBoost, with SMOTE and SHAP to explain the calls.",
-  tags: ["Coursework", "ML", "Python"],
+  summary: "Decision Tree, Random Forest and XGBoost on 284,807 card transactions, with SMOTE, a cost model and SHAP to explain the calls.",
+  tags: ["Python", "XGBoost", "scikit-learn", "SMOTE", "SHAP", "Coursework"],
   kinds: ["AI & ML"],
-  status: "notes",
-  result: "An explainable fraud model",
+  status: "case-study",
+  result: "87 of 98 test frauds caught",
+  when: "Spring 2026",
+  headline: { lead: "99.83% accurate,", accent: "and useless." },
+  lede: "Only 492 of 284,807 card transactions in this dataset are fraud. A model that calls every one of them legitimate scores 99.83% accuracy and catches nothing. For a Big Data module, a classmate and I built a pipeline that measures the right thing, compared three tree models, put a price on their mistakes, and explained each fraud call. Then I reread our code against our report and found where they disagree.",
+  teaser: "Why a 99.83% accurate fraud model can catch nothing.",
 };
+
+<Recipe
+  serves="A university module on big data. The dataset is public (European cardholders, two days in September 2013); no bank or real payment system was involved"
+  prep="Spring 2026 · one Jupyter notebook and a written report, as a pair"
+  role="Shared with a classmate across the whole pipeline: data audit, exploration, feature engineering, resampling, the three models, the cost analysis, SHAP and the report"
+  ingredients="Python, pandas, scikit-learn, XGBoost, imbalanced-learn (SMOTE), SHAP, SciPy, Matplotlib and seaborn"
+>
+  <BigResult value="0.87" note="Area under the precision-recall curve for XGBoost on the held-out test set. Guessing scores 0.002" />
+</Recipe>
+
+<Chapter n="01" title={<>The metric that <em>lies.</em></>}>
+
+The dataset is 284,807 card transactions, 492 of them fraud: one in every 578. To protect the cardholders, 28 of the columns arrive already transformed by PCA and named V1 to V28, so nobody can say what V14 means in banking terms. Only the time, the amount and the label are left as they were.
+
+At that imbalance, accuracy hides failure. Saying "legitimate" every time is right 99.83% of the time and misses every fraud. ROC curves flatter too, because tens of thousands of easy correct rejections pad the score. So we judged every model by the area under the precision-recall curve (AUPRC), which only looks at how well the model handles the fraud class. A model that guesses scores 0.002 on it.
+
+</Chapter>
+
+<Chapter n="02" title={<>Looking before <em>modelling.</em></>}>
+
+Before training anything we audited the data. No missing values, and 1,081 exact duplicate rows. We kept the duplicates: they're in the published dataset, we couldn't tell a recording error from a genuine repeat charge, and removing them would mostly have thinned out the fraud class we needed most.
+
+Exploring the data turned up a few patterns. Fraud has a lower median amount than legitimate spending (€9.25 against €22.00) but a higher mean (€122.21 against €88.29): small test charges, then large ones. Legitimate spending rises and falls with the day; fraud runs at a near-even rate around the clock, which looks like automation. And a handful of the anonymous columns, V17, V14, V12 and V10 above all, separate the two classes clearly.
+
+<Steps>
+  <Step title="Five new features">A log of the amount (skew down from 16.98 to 1.23), the hour, a time-of-day band, a count of positive PCA components, and V_energy: how far a transaction sits from the centre of the PCA space.</Step>
+  <Step title="Cut what repeats">A sixth candidate tracked V_energy almost exactly (r = 0.989), so it went. A scaled copy of the amount added nothing for tree models.</Step>
+  <Step title="Two kinds of correlation">Pearson for straight-line relationships, Spearman for rank. V17 scored 0.327 on the first and 0.044 on the second, a sign its link to fraud isn't a straight line.</Step>
+</Steps>
+
+V_energy was the feature I was keenest to test. If fraud is unusual, it should sit further from the middle of the data, whatever the columns mean. It came out the strongest of the five (point-biserial r = 0.268), and it shows up again in the decision tree's second split and in SHAP's top five.
+
+</Chapter>
+
+<Chapter n="03" title={<>Balancing the <em>training set only.</em></>}>
+
+We split the data three ways, stratified so each part kept the one-in-578 ratio: 72% to train, 8% to validate, 20% to test. The test set has 56,962 transactions and 98 frauds, and every result on this page comes from it.
+
+To give the models enough fraud to learn from, SMOTE generated synthetic fraud cases until the training set was even, 409,410 rows. It touched the training set and nothing else. Synthetic rows in the test set would have meant grading the models on fraud we'd made up.
+
+We also tried SMOTEENN, which adds a cleaning pass that deletes points near the class boundary. It made every model worse, XGBoost most of all (AUPRC down 0.044). The classes are already well separated in V14 and V17, so the cleaning removed real fraud, not noise. Plain SMOTE stayed.
+
+</Chapter>
+
+<Chapter n="04" title={<>Three trees, <em>one close race.</em></>}>
+
+All three models are built from decision trees, so their splits and feature rankings can be compared like for like. We left out logistic regression, because the fraud patterns aren't linear, and SVMs, which don't scale well to this many rows.
+
+The single decision tree caught 84 of the 98 frauds but raised 1,284 false alarms to do it: barely one flag in sixteen was real. A random forest of 200 trees cut the false alarms to 20 at the cost of three more misses. XGBoost missed the fewest, 11, with 41 false alarms.
+
+<Results>
+  <Stat value="0.39">AUPRC, single decision tree</Stat>
+  <Stat value="0.86">AUPRC, random forest</Stat>
+  <Stat value="0.87">AUPRC, XGBoost</Stat>
+</Results>
+
+XGBoost won on our main metric and on catching fraud. Random forest won on precision, F1 and MCC. The gap between them is small, and which one is better depends on what each kind of mistake costs.
+
+</Chapter>
+
+<Chapter n="05" title={<>Pricing the <em>mistakes.</em></>}>
+
+A missed fraud and a false alarm don't cost the same. We gave each one a price: $1,000 for a missed fraud, as the average loss that isn't recovered, and $100 for a false alarm, as an analyst's time to check it. These are illustrative figures from the literature, not a bank's numbers.
+
+On the test set, the decision tree costs $142,400, almost all of it spent chasing its 1,284 false alarms. Random forest costs $19,000 and XGBoost $15,100. XGBoost's 11 misses cost more than its 41 false alarms, which is the trade you want when missing fraud is the expensive mistake.
+
+<Blend
+  caption="XGBoost's $15,100 on the test set"
+  parts={[
+    { label: "Missed fraud", value: 73, note: "11 transactions at $1,000 each: $11,000" },
+    { label: "False alarms", value: 27, note: "41 transactions at $100 each: $4,100" },
+  ]}
+/>
+
+Change the prices and the winner can change. With false alarms dearer, random forest's 20 would beat XGBoost's 41. That's why the report recommends setting the decision threshold from the bank's own costs rather than leaving it at 0.5.
+
+</Chapter>
+
+<Chapter n="06" title={<>Why <em>this one</em> was flagged.</>}>
+
+A bank that blocks a payment automatically has to be able to say why. GDPR Article 22 gives people rights over decisions made solely by a machine. So we made sure each fraud call could be explained, in two ways.
+
+The decision tree can be read like a recipe. For one fraud in the test set, the path ran: V14 at or below −1.81 (it was −6.17), then V_energy above 6.83 (it was 14.52), then V10, V12, V4 and a few more checks, ending in a fraud leaf.
+
+For XGBoost we used SHAP, which splits a single prediction into how much each feature pushed it. For one fraud transaction, V14 pushed hardest toward fraud (+3.24), then V17 (+1.49), V10 (+1.28), V4 (+0.97) and V_energy (+0.60). V14 sat at or near the top of every view we took: the density plots, both correlations, the tree's first split and SHAP. That's what makes me trust it as a real signal.
+
+</Chapter>
+
+<Chapter n="07" title={<>The report said one thing. <em>The code did another.</em></>}>
+
+The report reads well. When I reread the code appendix line by line against it, three claims didn't hold.
+
+<Steps>
+  <Step title="A setting we never used">The report says XGBoost beat random forest partly because `scale_pos_weight` weighted fraud 576 times heavier. The code computes that number, prints it, and never passes it to the model; a comment even says it isn't used. XGBoost won with SMOTE and regularisation alone.</Step>
+  <Step title="SHAP on three frauds">SHAP ran on 2,000 test rows picked at random, not stratified as the report says, and only 3 of them were fraud. The figures the report calls averages across the sample are the values for one transaction. The single-transaction explanation stands; the claims about the whole sample don't.</Step>
+  <Step title="A deployment on paper">The report describes an ONNX scoring service under 5ms, inline in card authorisation, with drift monitoring. None of it was built or measured. It's a proposal, and it should have said so.</Step>
+</Steps>
+
+None of these changes the ranking, but each one claims more than we did. The lesson I took: in data work, the write-up is part of the result, and it needs checking against the code the same way the code gets checked against the data.
+
+</Chapter>
+
+<Chapter n="08" title={<>What I'd do <em>differently.</em></>}>
+
+I'd test the result before trusting it. The gap between XGBoost and random forest is 0.007 AUPRC on a single split with 98 frauds, too small to call a winner. Cross-validation, or repeated splits, would say whether it's real.
+
+I'd also split by time rather than at random, so the models train on earlier transactions and are tested on later ones, the way a bank would use them. Then: run SHAP on a sample with enough fraud to say something about the whole, try `scale_pos_weight` against SMOTE as a real experiment, tune the threshold against the cost model, and build the scoring service the report describes before writing about how fast it is.
+
+</Chapter>
