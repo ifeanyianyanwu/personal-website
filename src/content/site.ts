@@ -100,7 +100,7 @@ export const recipes: Recipe[] = [
     eyebrow: "ConnectHub · AI matching · 2025 to 2026",
     headline: "Friends found by what you love.",
     serves: "People looking for others who share a hobby",
-    prep: "Oct 2025 to May 2026",
+    prep: "Aug 2025 to May 2026",
     ingredients: "Next.js, Supabase, Gemini embeddings, Jaccard similarity",
     result: { value: "60/40", note: "hybrid matching" },
   },
