@@ -97,10 +97,10 @@ export const recipes: Recipe[] = [
   {
     slug: "connecthub",
     name: "ConnectHub",
-    eyebrow: "ConnectHub · AI matching · 2025 to 2026",
+    eyebrow: "ConnectHub · AI matching · 2026",
     headline: "Friends found by what you love.",
     serves: "People looking for others who share a hobby",
-    prep: "Aug 2025 to May 2026",
+    prep: "Jan to May 2026",
     ingredients: "Next.js, Supabase, Gemini embeddings, Jaccard similarity",
     result: { value: "60/40", note: "hybrid matching" },
   },
@@ -191,7 +191,7 @@ export const about = {
     { year: "2023", kind: "Work", title: "Fast is a feature.", body: "DEIMR: moved a live marketplace from React to Next.js and took page loads from 9 to 15s down to about 1.5s. Mentored two interns.", href: "/work/deimr" },
     { year: "2024", kind: "Work", title: "Cards, wallets, tests.", body: "MoneyPigeon: built a pre-launch crypto lending platform with virtual debit cards from scratch, helped shape its product and design, and took tests from 0% to 75%.", href: "/work/moneypigeon" },
     { year: "Along the way", kind: "Life", title: "Pace and people.", body: "I also waited tables. I was usually the one they called for the heavy lifting." },
-    { year: "2025", kind: "Life", title: "Malta.", body: "Moved to finish my degree and started ConnectHub, my final-year project. Screen Guide and BabaPlug went live the same year.", href: "/work/connecthub" },
+    { year: "2025", kind: "Life", title: "Malta.", body: "Moved to finish my degree. Screen Guide and BabaPlug went live the same year.", href: "/work/screen-guide" },
     { year: "2026", kind: "Award", title: "First Class. Top 10.", body: "Graduated with First Class Honours, placed top 10 solo at CodeSprintMT, joined the chess club, and started full time at LetsDap.", href: "/work/codesprintmt" },
   ],
   roles: [
