@@ -1,6 +1,2 @@
-/** Absolute site URL (no trailing slash): SITE_URL, then Vercel's production URL, then localhost. */
-export const siteUrl = (
-  process.env.SITE_URL ||
-  (process.env.VERCEL_PROJECT_PRODUCTION_URL && `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`) ||
-  "http://localhost:3000"
-).replace(/\/$/, "");
+/** Absolute canonical site URL (no trailing slash): SITE_URL if set (e.g. a custom domain), else production. */
+export const siteUrl = (process.env.SITE_URL || "https://ifeanyianyanwu.vercel.app").replace(/\/$/, "");

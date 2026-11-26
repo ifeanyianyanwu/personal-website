@@ -19,7 +19,7 @@ async function find(slug: string) {
 
 export async function generateMetadata({ params }: PageProps<"/work/[slug]">): Promise<Metadata> {
   const { study } = await find((await params).slug);
-  return { title: `${study.title} case study`, description: study.lede };
+  return { title: `${study.title} case study`, description: study.lede, alternates: { canonical: `/work/${study.slug}` } };
 }
 
 // The slug is URL data, so it's read inside Suspense (Partial Prefetching); known slugs still prerender.

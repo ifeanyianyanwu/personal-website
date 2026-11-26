@@ -80,7 +80,7 @@ export const recipes: Recipe[] = [
     name: "DEIMR",
     eyebrow: "DEIMR · Marketplace · 2023",
     headline: "Fast is a feature.",
-    serves: "~1,000 users, storefront and dashboard",
+    serves: "~1,000 users, storefront and buyer dashboard",
     prep: "2023 · sole storefront engineer",
     ingredients: "Next.js, React.lazy + Suspense, WebP, caching",
     result: { value: "1.5s", note: "page load, from 9 to 15s" },
@@ -190,16 +190,17 @@ export const about = {
     { year: "2023", kind: "Work", title: "Fast is a feature.", body: "DEIMR: moved a live marketplace from React to Next.js and took page loads from 9 to 15s down to about 1.5s. Mentored two interns.", href: "/work/deimr" },
     { year: "2024", kind: "Work", title: "Cards, wallets, tests.", body: "MoneyPigeon: built a pre-launch crypto lending platform with virtual debit cards from scratch, helped shape its product and design, and took tests from 0% to 75%.", href: "/work/moneypigeon" },
     { year: "Along the way", kind: "Life", title: "Pace and people.", body: "I also waited tables. I was usually the one they called for the heavy lifting." },
-    { year: "2025", kind: "Life", title: "Malta.", body: "Moved to finish my degree. Screen Guide and BabaPlug went live the same year.", href: "/work/screen-guide" },
-    { year: "2026", kind: "Award", title: "First Class. Top 10.", body: "Graduated with First Class Honours, placed top 10 solo at CodeSprintMT, joined the chess club, and started full time at LetsDap.", href: "/work/codesprintmt" },
+    { year: "2025", kind: "Life", title: "Malta.", body: "Moved to finish my degree. Screen Guide went live, and I built the BabaPlug blog for a client.", href: "/work/screen-guide" },
+    { year: "2026", kind: "Award", title: "First Class. Top 10.", body: "Graduated with First Class Honours, placed top 10 solo at CodeSprintMT, joined the chess club, and started part-time at LetsDap.", href: "/work/codesprintmt" },
   ],
   roles: [
     {
       when: "Oct 2026 to now",
       title: "Full-Stack Engineer",
       org: "LetsDap",
-      meta: "Malta, remote · full-time · events platform",
+      meta: "Malta, remote · part-time · events platform",
       points: [
+        "Shipped the backend implementation for offline check-in on the events platform.",
         "Build and maintain NestJS APIs in TypeScript, with Docker for local development.",
         "Ship features end to end, from API integration to the frontend UI.",
         "Build, test, refactor and review with Claude Code under team rules and guardrails for the agents, with my own review and tests on every change.",
@@ -219,7 +220,7 @@ export const about = {
       title: "Frontend Engineer",
       org: "DEIMR",
       meta: "Cyprus, remote · full-time · electronics marketplace",
-      points: ["Page load from 9 to 15s down to ~1.5s (Lighthouse).", "Migrated React to Next.js; sole developer of the storefront and dashboard (~1,000 users).", "Interviewed, onboarded and mentored 2 frontend interns."],
+      points: ["Page load from 9 to 15s down to ~1.5s (Lighthouse).", "Migrated React to Next.js; sole developer of the storefront and buyer dashboard (~1,000 users).", "Interviewed, onboarded and mentored 2 frontend interns."],
       stack: "Next.js · React · WebP · code-splitting",
     },
     {

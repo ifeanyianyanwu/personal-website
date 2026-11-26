@@ -1,7 +1,7 @@
 export const meta = {
   title: "DEIMR",
   year: 2023,
-  summary: "Marketplace storefront and dashboard, made fast.",
+  summary: "Marketplace storefront and buyer dashboard, made fast.",
   tags: ["Next.js", "React", "Lighthouse"],
   kinds: ["Production"],
   status: "case-study",
@@ -15,7 +15,7 @@ export const meta = {
 <Recipe
   serves="~1,000 users of a marketplace for electronics, spare parts and repairs"
   prep="Feb 2023 to Jan 2024 · remote, Famagusta, Cyprus"
-  role="Sole engineer on the storefront, user dashboard and landing page, in a team with CRM and mobile engineers, product design, the COO and CEO"
+  role="Sole engineer on the storefront, buyer dashboard and landing page (another engineer built the seller dashboard), in a team with CRM and mobile engineers, product design, the COO and CEO"
   ingredients="React → Next.js, React.lazy + Suspense, WebP, Next.js caching, Lighthouse"
 >
   <PlotChart label="Page load" from="9 to 15s" to="~1.5s" trend="down" />
@@ -26,6 +26,8 @@ export const meta = {
 DEIMR sells electronics, spare parts and device repairs. When I joined, pages took 9 to 15 seconds to load. On a marketplace, a slow page is a closed shop: people leave before they see a product.
 
 The hard part wasn't only the code. The shop was live, and changing frameworks under a live shop is a big thing to ask for. I had to show management that React on its own wasn't the right fit, win the go-ahead to switch, and then do the move alone while customers kept using it.
+
+I also built the seller sign-up and Stripe payment flow as an extension of the landing page.
 
 </Chapter>
 
@@ -51,7 +53,7 @@ The hard part wasn't only the code. The shop was live, and changing frameworks u
 <Chapter n="04" title="The result.">
   <Results>
     <Stat value="1.5s">page load, down from 9 to 15s, measured with Lighthouse</Stat>
-    <Stat value="~1,000">users on the storefront and dashboard</Stat>
+    <Stat value="~1,000">users on the storefront and buyer dashboard</Stat>
     <Stat value="2">frontend interns interviewed, onboarded and mentored</Stat>
   </Results>
 </Chapter>

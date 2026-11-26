@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: PageProps<"/journal/[slug]">)
   return {
     title: plainTitle(post),
     description: post.summary,
-    alternates: { types: { "application/rss+xml": "/journal/rss.xml" } },
+    alternates: { canonical: `/journal/${post.slug}`, types: { "application/rss+xml": "/journal/rss.xml" } },
   };
 }
 
