@@ -7,6 +7,7 @@ import { getWork } from "@/lib/work";
 export const metadata: Metadata = {
   title: "Work",
   description: "Products I've shipped, built and learned from, with case studies.",
+  alternates: { canonical: "/work" },
 };
 
 export default async function WorkIndex() {

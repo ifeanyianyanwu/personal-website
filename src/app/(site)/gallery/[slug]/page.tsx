@@ -10,7 +10,9 @@ import { monthYear } from "@/sanity/types";
 
 export async function generateMetadata({ params }: PageProps<"/gallery/[slug]">): Promise<Metadata> {
   const point = await getPlotPoint((await params).slug);
-  return point ? { title: point.title, description: point.caption } : {};
+  return point
+    ? { title: point.title, description: point.caption, alternates: { canonical: `/gallery/${point.slug}` } }
+    : {};
 }
 
 // No generateStaticParams: the feed changes from the Studio, so items render on first visit and stay cached.

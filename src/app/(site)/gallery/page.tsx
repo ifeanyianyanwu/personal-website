@@ -8,6 +8,7 @@ import { getPlotPoints } from "@/sanity/queries";
 export const metadata: Metadata = {
   title: "Plot points",
   description: "Things I cook, draw, play and build, plotted by when they happened.",
+  alternates: { canonical: "/gallery" },
 };
 
 export default async function Gallery() {

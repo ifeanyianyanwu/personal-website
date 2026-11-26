@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Hero } from "@/components/home/hero";
 import { Intro } from "@/components/home/intro";
 import { Latest } from "@/components/home/latest";
@@ -5,6 +6,8 @@ import { Faq, Proof, Story } from "@/components/home/sections";
 import { Work } from "@/components/home/work";
 import { Marquee } from "@/components/ui";
 import { marquee } from "@/content/site";
+
+export const metadata: Metadata = { alternates: { canonical: "/" } };
 
 export default function Home() {
   return (

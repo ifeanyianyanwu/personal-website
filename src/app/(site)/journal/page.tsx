@@ -9,7 +9,7 @@ import { getJournal } from "@/lib/journal";
 export const metadata: Metadata = {
   title: "Journal",
   description: "Lessons from building and from life, things I notice, and my own thinking, written down while it's fresh.",
-  alternates: { types: { "application/rss+xml": "/journal/rss.xml" } },
+  alternates: { canonical: "/journal", types: { "application/rss+xml": "/journal/rss.xml" } },
 };
 
 /** Plot route: header 1 and 2, posts 10 and up (see `JournalView`), drafts 50 and up, end 90. */

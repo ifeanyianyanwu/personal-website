@@ -10,6 +10,7 @@ import { about, links, profile } from "@/content/site";
 export const metadata: Metadata = {
   title: "About",
   description: "How a kid with a screwdriver became a full-stack engineer, plus the CV.",
+  alternates: { canonical: "/about" },
 };
 
 /**
